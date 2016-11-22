@@ -6,4 +6,8 @@
     <string name="show_map">Show Map</string>
     <string name="title_activity_map">Map</string>
     <string name="register_button">Register</string>
+    <string name="logout">Logout</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="password_confirmation">Repeat Password</string>
+    <string name="back">Back</string>
 </resources>

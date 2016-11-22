@@ -13,8 +13,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    public void showCacheList(View view){
+        Intent intent = new Intent(this, CacheListActivity.class);
+    }
+
     public void showMap(View view){
         Intent i = new Intent(this, MapActivity.class);
         this.startActivity(i);
+    }
+
+    public void sendLogoutMessage(View view) {
+        finish();
     }
 }
