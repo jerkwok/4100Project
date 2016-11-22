@@ -4,4 +4,5 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="show_map">Show Map</string>
+    <string name="title_activity_map">Map</string>
 </resources>
