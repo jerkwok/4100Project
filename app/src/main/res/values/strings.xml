@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Geocaching</string>
+    <string name="login_button">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="show_map">Show Map</string>
 </resources>
