@@ -232,15 +232,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             });
 
             mMap.addMarker(new MarkerOptions().position(newLocation)
-                    .title("Location Information")
-                    .snippet("Address Line 1: " + address.getAddressLine(0) + "\n" +
-                            "Address Line 2: " + address.getAddressLine(1) + "\n" +
-                            "Locality (City): " + address.getLocality() + "\n" +
-                            "Admin Area (Province): " + address.getAdminArea() + "\n" +
-                            "Country: " + address.getCountryName() + "\n" +
-                            "Postal Code: " + address.getPostalCode() + "\n" +
-                            "Phone Number: " + address.getPhone() + "\n" +
-                            "Url: " + address.getUrl()));
+                    .title("Geocache Information")
+                    .snippet("Latitude: " + address.getLatitude() + "\n" +
+                            "Longitude: " + address.getLongitude()));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(newLocation));
         }
     }
