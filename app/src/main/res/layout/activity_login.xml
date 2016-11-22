@@ -40,4 +40,10 @@
         android:layout_width="match_parent"
         android:text="@string/login_button"
         android:onClick="sendLoginMessage"/>
+
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/register_button"
+        android:onClick="sendRegisterMessage"/>
 </LinearLayout>
