@@ -15,9 +15,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.provider.Settings;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -40,7 +40,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
 
     private GoogleMap mMap;
     private GoogleApiClient client;
