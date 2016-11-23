@@ -20,6 +20,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,6 +47,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private GoogleApiClient client;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.map_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.map:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,15 +232,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             });
 
             mMap.addMarker(new MarkerOptions().position(newLocation)
-                    .title("Location Information")
-                    .snippet("Address Line 1: " + address.getAddressLine(0) + "\n" +
-                            "Address Line 2: " + address.getAddressLine(1) + "\n" +
-                            "Locality (City): " + address.getLocality() + "\n" +
-                            "Admin Area (Province): " + address.getAdminArea() + "\n" +
-                            "Country: " + address.getCountryName() + "\n" +
-                            "Postal Code: " + address.getPostalCode() + "\n" +
-                            "Phone Number: " + address.getPhone() + "\n" +
-                            "Url: " + address.getUrl()));
+                    .title("Geocache Information")
+                    .snippet("Latitude: " + address.getLatitude() + "\n" +
+                            "Longitude: " + address.getLongitude()));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(newLocation));
         }
     }
