@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void showCacheList(View view){
         Intent intent = new Intent(this, CacheListActivity.class);
+        this.startActivity(intent);
     }
 
     public void showMap(View view){
