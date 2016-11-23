@@ -14,6 +14,12 @@ public class User {
         this.caches = caches;
     }
 
+    public User(int userID, String username, String caches) {
+        this.userID = userID;
+        this.username = username;
+        this.caches = caches;
+    }
+
     public int getUserID() {
         return userID;
     }

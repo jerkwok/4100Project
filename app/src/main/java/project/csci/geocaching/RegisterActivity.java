@@ -25,6 +25,19 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void sendRegisterMessage(View view) {
+        if (validatePasswords()){
+            finish();
+        }
         finish();
+    }
+
+    private boolean validatePasswords() {
+        EditText passwordField = (EditText) findViewById(R.id.password_entry);
+        EditText passwordConfirmField = (EditText) findViewById(R.id.password_confirm);
+
+        if (passwordField.getText().equals(passwordConfirmField.getText())){
+            return true;
+        }
+        return false;
     }
 }
