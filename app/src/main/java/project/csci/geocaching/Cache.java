@@ -1,9 +1,5 @@
 package project.csci.geocaching;
 
-/**
- * Created by jeremy on 23/11/16.
- */
-
 public class Cache {
 
     private int cacheID;
@@ -11,6 +7,22 @@ public class Cache {
     private double latitude;
     private double longitude;
     private String description;
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Cache(){
+        this.cacheID = -1;
+        this.name = "";
+        this.latitude = 0;
+        this.longitude = 0;
+        this.description = "";
+    }
 
     public Cache(int cacheID, String name, String description, double longitude, double latitude) {
         this.cacheID = cacheID;

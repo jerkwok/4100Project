@@ -11,11 +11,16 @@
     android:orientation="vertical"
     tools:context="project.csci.geocaching.CacheListActivity">
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cache_list"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/show_caches"
-        android:onClick="showClicked"/>
+        android:text="@string/track_caches"
+        android:onClick="trackClicked"/>
 
     <Button
         android:layout_width="wrap_content"

@@ -11,7 +11,9 @@
     <string name="password_confirmation">Repeat Password</string>
     <string name="back">Back</string>
     <string name="password_dont_match">Passwords Don\'t Match</string>
-    <string name="welcome_message">Hello %1s! Welcome to Geocaching</string>
+    <string name="welcome_message">Hello %1$s! Welcome to Geocaching</string>
     <string name="show_cache_list">Caches</string>
     <string name="show_caches">Show Caches</string>
+    <string name="track_caches">Track Selected Cache</string>
+    <string name="tracking_information">You\'re Tracking Cache ID:%1$d, Title:%2$s, Lat:%3$f, Long:%4$f</string>
 </resources>

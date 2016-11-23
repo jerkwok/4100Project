@@ -1,10 +1,15 @@
 package project.csci.geocaching;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,10 +21,12 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CacheListActivity extends AppCompatActivity {
+public class CacheListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     ArrayList<Cache> cacheList = new ArrayList<>();
+    Cache selected = null;
     String url = "http://pastebin.com/raw/25LhSH2a";
+    private ListView listview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,12 @@ public class CacheListActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        if (cacheList.size()> 0){
+            for( Cache cache : cacheList){
+                Log.d("Cache", cache.toString());
+            }
+            refreshDisplay();
+        }
     }
 
     public void backButtonClicked(View view){
@@ -58,7 +71,7 @@ public class CacheListActivity extends AppCompatActivity {
 
         BufferedReader in = new BufferedReader(new InputStreamReader(inStream));
 
-        String line = null;
+        String line;
         while ((line = in.readLine()) != null) {
             lines.add(line);
         }
@@ -80,9 +93,39 @@ public class CacheListActivity extends AppCompatActivity {
         return inputStream;
     }
 
-    public void showClicked(View view) {
-        for( Cache cache : cacheList){
-            Log.d("Cache", cache.toString());
+    private void refreshDisplay() {
+        listview = (ListView) findViewById(R.id.cache_list);
+        ArrayAdapter<Cache> arrayAdapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                cacheList);
+
+        listview.setAdapter(arrayAdapter);
+        listview.setOnItemClickListener(CacheListActivity.this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d("CLICKED", cacheList.get(position).toString());
+        for(int a = 0; a < parent.getChildCount(); a++)
+        {
+            parent.getChildAt(a).setBackgroundColor(Color.TRANSPARENT);
         }
+
+        view.setBackgroundColor(Color.GREEN);
+        selected = cacheList.get(position);
+    }
+
+    public void trackClicked(View view) {
+        Intent output = new Intent();
+        if (selected != null){
+            output.putExtra("cacheID", selected.getCacheID());
+            output.putExtra("cacheName", selected.getName());
+            output.putExtra("cacheLat", selected.getLat());
+            output.putExtra("cacheLong", selected.getLongitude());
+            output.putExtra("cacheDesc", selected.getDescription());
+        }
+        setResult(RESULT_OK,output);
+        finish();
     }
 }
