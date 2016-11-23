@@ -5,48 +5,48 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final int REGISTER_CODE = 0;
+    private UserDBHelper database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        database = new UserDBHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-//        String hashedPass = BCrypt.hashpw("halloworld", BCrypt.gensalt());
-//        String hashedPass2 = BCrypt.hashpw("halloworld", BCrypt.gensalt());
-//        String hashedPass3 = BCrypt.hashpw("halloworld", BCrypt.gensalt());
-//
-//        Log.d("One", hashedPass);
-//        Log.d("One", hashedPass2);
-//        Log.d("One", hashedPass3);
-//
-//        if(BCrypt.checkpw("halloworld",hashedPass)){
-//            Log.d("One", "true");
-//        }else{
-//            Log.d("One", "false");
-//        }
-//
-//        if(BCrypt.checkpw("halloworld",hashedPass2)){
-//            Log.d("One", "true");
-//        }else{
-//            Log.d("One", "false");
-//        }
-//
-//        if(BCrypt.checkpw("halloworld",hashedPass3)){
-//            Log.d("One", "true");
-//        }else{
-//            Log.d("One", "false");
-//        }
 
     }
 
     public void sendLoginMessage(View view){
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
+        EditText usernameEditText = (EditText) findViewById(R.id.username_entry);
+        EditText passwordEditText = (EditText) findViewById(R.id.password_entry);
+
+        if(database.validatePass(usernameEditText.getText().toString(), passwordEditText.getText().toString())){
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("username", usernameEditText.getText().toString());
+            startActivity(intent);
+        }
     }
 
     public void sendRegisterMessage(View view){
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REGISTER_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        
+        if(requestCode == REGISTER_CODE){
+            if(resultCode == RESULT_OK){
+                //login
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("username", data.getStringExtra("username"));
+                startActivity(intent);
+            }
+        }
     }
 }

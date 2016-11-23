@@ -8,11 +8,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class UserDBHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "Users.db";
+    private static final String DATABASE_NAME = "Users.db";
     private static final int DATABASE_VERSION = 1;
 
-    public UserDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public UserDBHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -55,4 +55,33 @@ public class UserDBHelper extends SQLiteOpenHelper {
     }
 
 
+    public boolean validatePass(String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        boolean match = false;
+        Cursor cursor = db.rawQuery("SELECT  * FROM Users WHERE name = ?",
+                new String[]{username});
+
+        if (cursor.moveToFirst()){
+            if(BCrypt.checkpw(password,cursor.getString(2))){
+                match = true;
+            }
+        }
+
+        cursor.close();
+        return match;
+    }
+
+    public boolean checkUserDupes(String username){
+        SQLiteDatabase db = this.getReadableDatabase();
+        boolean match = false;
+        Cursor cursor = db.rawQuery("SELECT  * FROM Users WHERE name = ?",
+                new String[]{username});
+
+        if (cursor.getCount() > 0){
+                match = true;
+        }
+
+        cursor.close();
+        return match;
+    }
 }
