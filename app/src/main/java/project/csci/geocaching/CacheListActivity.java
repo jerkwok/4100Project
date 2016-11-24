@@ -24,7 +24,7 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
 
     ArrayList<Cache> cacheList = new ArrayList<>();
     Cache selected = null;
-    String url = "http://pastebin.com/raw/25LhSH2a";
+    String url = "http://pastebin.com/raw/Gq23ySAB";
     String userCachesBits;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
