@@ -124,14 +124,14 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
 
         view.setBackgroundColor(Color.GREEN);
 
-//        for(int a = 0; a < parent.getChildCount(); a++)
-//        {
-//            if ((position < userCachesBits.length()) &&
-//                    (userCachesBits.charAt(userCachesBits.length() - position - 1) == '1')
-//                    ){
-//                parent.getChildAt(a).setBackgroundColor(Color.BLUE);
-//            }
-//        }
+        for(int a = 0; a < parent.getChildCount(); a++)
+        {
+            if ((a < userCachesBits.length()) &&
+                    (userCachesBits.substring(userCachesBits.length() - a - 1).charAt(0) == '1')
+                    ){
+                parent.getChildAt(a).setBackgroundColor(Color.BLUE);
+            }
+        }
 
         selected = cacheList.get(position);
     }

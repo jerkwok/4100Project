@@ -41,11 +41,11 @@ public class CacheListAdapter extends ArrayAdapter<Cache> {
 
         Log.d("ADAPTER CACHES", caches);
 
-//        if ((position < caches.length()) &&
-//                (caches.charAt(caches.length() - 1 -position) == '1')
-//                ){
-//            rowView.setBackgroundColor(Color.BLUE);
-//        }
+        if ((position < caches.length()) &&
+                (caches.substring(caches.length() - position - 1).charAt(0) == '1')
+                ){
+            rowView.setBackgroundColor(Color.BLUE);
+        }
         return rowView;
     }
 }
