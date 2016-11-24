@@ -10,6 +10,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int MAIN_CODE = 1;
     private static final int CACHE_LIST_CODE = 2;
+    private static final int TRACKING_CODE = 3;
     private Cache trackingCache = new Cache();
     int userCaches;
     @Override
@@ -64,10 +65,26 @@ public class MainActivity extends AppCompatActivity {
                     trackingCache.getName(),
                     trackingCache.getLat(),
                     trackingCache.getLong()));
+        }else if ((requestCode == CACHE_LIST_CODE) && (resultCode == RESULT_OK)){
+            //cache successfully claimed
         }
     }
 
     public void sendDebugMessage(View view) {
         userCaches = 2;
+    }
+
+    public void showTracking(View view) {
+        Intent i = new Intent(this, MapActivity.class);
+        if (trackingCache.getCacheID() != -1){
+            i.putExtra("cacheSelected", true);
+            i.putExtra("cacheID", trackingCache.getCacheID());
+            i.putExtra("cacheName", trackingCache.getName());
+            i.putExtra("cacheLat", trackingCache.getLat());
+            i.putExtra("cacheLong", trackingCache.getLong());
+        } else {
+            i.putExtra("cacheSelected", false);
+        }
+        this.startActivityForResult(i, TRACKING_CODE);
     }
 }
