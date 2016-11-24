@@ -35,6 +35,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -196,7 +197,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void setLocation(Location location, Address address) {
 
         if (mMap != null) {
-            LatLng newLocation = new LatLng(location.getLatitude(), location.getLongitude());
+            LatLng currLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
             mMap.clear();
             mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -231,11 +232,28 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
             });
 
-            mMap.addMarker(new MarkerOptions().position(newLocation)
-                    .title("Geocache Information")
+            mMap.addMarker(new MarkerOptions().position(currLocation)
+                    .title("Current Location")
                     .snippet("Latitude: " + address.getLatitude() + "\n" +
-                            "Longitude: " + address.getLongitude()));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(newLocation));
+                             "Longitude: " + address.getLongitude()));
+
+            Intent i = getIntent();
+            boolean selected = i.getBooleanExtra("cacheSelected",false);
+
+            if (selected) {
+                String cacheTitle = i.getStringExtra("cacheName");
+                double cacheLat = i.getDoubleExtra("cacheLat", 0);
+                double cacheLong = i.getDoubleExtra("cacheLong", 0);
+
+                LatLng geocacheLocation = new LatLng(cacheLat, cacheLong);
+
+                mMap.addMarker(new MarkerOptions().position(geocacheLocation)
+                        .title(cacheTitle)
+                        .snippet("Latitude: " + cacheLat + "\n" +
+                                "Longitude: " + cacheLong)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            }
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(currLocation));
         }
     }
 
