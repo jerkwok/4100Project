@@ -8,11 +8,11 @@ public class Cache {
     private double longitude;
     private String description;
 
-    public double getLongitude() {
+    public double getLong() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLong(double longitude) {
         this.longitude = longitude;
     }
 

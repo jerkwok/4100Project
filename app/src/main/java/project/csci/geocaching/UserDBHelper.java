@@ -84,4 +84,18 @@ public class UserDBHelper extends SQLiteOpenHelper {
         cursor.close();
         return match;
     }
+
+    public int getUserCaches(String username){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int caches = 0;
+        Cursor cursor = db.rawQuery("SELECT  * FROM Users WHERE name = ?",
+                new String[]{username});
+
+        if (cursor.getCount() > 0){
+            caches = cursor.getInt(3);
+        }
+
+        cursor.close();
+        return caches;
+    }
 }

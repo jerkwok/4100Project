@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         if(database.validatePass(usernameEditText.getText().toString(), passwordEditText.getText().toString())){
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("username", usernameEditText.getText().toString());
+            intent.putExtra("userCaches", database.getUserCaches(usernameEditText.getText().toString()));
             startActivity(intent);
         }else{
             //display toast
@@ -53,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                 //login
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("username", data.getStringExtra("username"));
+                intent.putExtra("userCaches", data.getIntExtra("userCaches",0));
                 startActivity(intent);
             }
         }

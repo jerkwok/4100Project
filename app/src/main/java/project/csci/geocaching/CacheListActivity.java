@@ -27,7 +27,7 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
     Cache selected = null;
     String url = "http://pastebin.com/raw/25LhSH2a";
     private ListView listview;
-
+    String userCachesbits;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +35,9 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        userCachesbits = Integer.toBinaryString(getIntent().getIntExtra("userCaches", 0));
+        Log.d("BITS", userCachesbits);
 
         try{
             InputStream URLstream = OpenHttpConnection(url);
@@ -122,7 +125,7 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
             output.putExtra("cacheID", selected.getCacheID());
             output.putExtra("cacheName", selected.getName());
             output.putExtra("cacheLat", selected.getLat());
-            output.putExtra("cacheLong", selected.getLongitude());
+            output.putExtra("cacheLong", selected.getLong());
             output.putExtra("cacheDesc", selected.getDescription());
         }
         setResult(RESULT_OK,output);

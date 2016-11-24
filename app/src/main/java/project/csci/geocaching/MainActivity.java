@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 public class MainActivity extends AppCompatActivity {
 
     private static final int MAIN_CODE = 1;
@@ -25,11 +23,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void showCacheList(View view){
         Intent intent = new Intent(this, CacheListActivity.class);
+
+        intent.putExtra("userCaches", getIntent().getIntExtra("userCaches", 0));
         this.startActivityForResult(intent, CACHE_LIST_CODE);
     }
 
     public void showMap(View view){
         Intent i = new Intent(this, MapActivity.class);
+        if (trackingCache.getCacheID() != -1){
+            i.putExtra("cacheID", trackingCache.getCacheID());
+            i.putExtra("cacheName", trackingCache.getName());
+            i.putExtra("cacheLat", trackingCache.getLat());
+            i.putExtra("cacheLong", trackingCache.getLong());
+        }
         this.startActivity(i);
     }
 
@@ -45,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             trackingCache.setCacheID(data.getIntExtra("cacheID", 0));
             trackingCache.setName(data.getStringExtra("cacheName"));
             trackingCache.setLat(data.getDoubleExtra("cacheLat", 0));
-            trackingCache.setLongitude(data.getDoubleExtra("cacheLong", 0));
+            trackingCache.setLong(data.getDoubleExtra("cacheLong", 0));
             trackingCache.setDescription(data.getStringExtra("cacheDesc"));
 
             TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
@@ -53,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     trackingCache.getCacheID(),
                     trackingCache.getName(),
                     trackingCache.getLat(),
-                    trackingCache.getLongitude()));
+                    trackingCache.getLong()));
         }
     }
 }

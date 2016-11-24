@@ -47,6 +47,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private GoogleApiClient client;
+    Intent intent;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,9 +75,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        intent = getIntent();
         setupLocationServices();
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
 
     private void setupLocationServices() {
@@ -235,6 +237,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     .title("Geocache Information")
                     .snippet("Latitude: " + address.getLatitude() + "\n" +
                             "Longitude: " + address.getLongitude()));
+
+            if (intent.hasExtra("cacheID")){
+                LatLng cacheLoc = new LatLng(intent.getDoubleExtra("cacheLat", 0), intent.getDoubleExtra("cacheLong", 0));
+                mMap.addMarker(new MarkerOptions()
+                        .position(cacheLoc)
+                        .title("ID:" + intent.getStringExtra("cacheID") +":" + intent.getStringExtra("cacheName"))
+                        .snippet("Latitude: " + intent.getDoubleExtra("cacheLat", 0) + "\n" +
+                                "Longitude: " + intent.getDoubleExtra("cacheLong", 0)));
+            }
+
             mMap.moveCamera(CameraUpdateFactory.newLatLng(newLocation));
         }
     }
