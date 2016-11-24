@@ -11,11 +11,27 @@
     android:orientation="vertical"
     tools:context="project.csci.geocaching.MainActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/username_textview"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tracking_textview"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="showMap"
         android:text="@string/show_map"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showCacheList"
+        android:text="@string/show_cache_list"/>
 
     <Button
         android:layout_width="wrap_content"

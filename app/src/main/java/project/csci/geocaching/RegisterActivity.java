@@ -1,8 +1,10 @@
 package project.csci.geocaching;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -10,15 +12,18 @@ import android.widget.Toast;
 public class RegisterActivity extends AppCompatActivity {
 
     UserDBHelper database = new UserDBHelper(this);
-    EditText usernameText = (EditText) findViewById(R.id.username_entry);
-    EditText passwordText = (EditText) findViewById(R.id.password_entry);
-    EditText passwordConfirmText = (EditText) findViewById(R.id.password_confirm);
+    EditText usernameText;
+    EditText passwordText;
+    EditText passwordConfirmText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        usernameText = (EditText) findViewById(R.id.username_entry);
+        passwordText = (EditText) findViewById(R.id.password_entry);
+        passwordConfirmText = (EditText) findViewById(R.id.password_confirm);
 
         passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         passwordConfirmText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -30,18 +35,35 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void sendRegisterMessage(View view) {
+        if (validatePasswords()) {
+            Log.d("Password:", "TRUE");
+        }else {
+            Log.d("Password:", "FALSE");
+        }
+
+        if (!(database.checkUserDupes(usernameText.getText().toString()))) {
+            Log.d("Dupe:", "TRUE");
+        }else {
+            Log.d("Dupe:", "FALSE");
+        }
+
         if (validatePasswords() && !(database.checkUserDupes(usernameText.getText().toString())) ){
             database.addEntry(usernameText.getText().toString(), passwordText.getText().toString());
-            setResult(RESULT_OK);
+            Intent output = new Intent();
+            output.putExtra("username",usernameText.getText().toString() );
+            setResult(RESULT_OK,output);
             finish();
+        }else{
+            //display toast, passwords don't match
+            Toast.makeText(this, getString(R.string.password_dont_match), Toast.LENGTH_SHORT).show();
         }
-        //display toast, passwords don't match
-        Toast.makeText(this, getString(R.string.password_dont_match), Toast.LENGTH_SHORT).show();
     }
 
     private boolean validatePasswords() {
+        Log.d("password", passwordText.getText().toString());
+        Log.d("password2", passwordConfirmText.getText().toString());
 
-        if (passwordText.getText().equals(passwordConfirmText.getText())){
+        if (passwordText.getText().toString().equals(passwordConfirmText.getText().toString())){
             return true;
         }
         return false;
