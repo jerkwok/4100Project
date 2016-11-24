@@ -32,10 +32,13 @@ public class MainActivity extends AppCompatActivity {
     public void showMap(View view){
         Intent i = new Intent(this, MapActivity.class);
         if (trackingCache.getCacheID() != -1){
+            i.putExtra("cacheSelected", true);
             i.putExtra("cacheID", trackingCache.getCacheID());
             i.putExtra("cacheName", trackingCache.getName());
             i.putExtra("cacheLat", trackingCache.getLat());
             i.putExtra("cacheLong", trackingCache.getLong());
+        } else {
+            i.putExtra("cacheSelected", false);
         }
         this.startActivity(i);
     }
