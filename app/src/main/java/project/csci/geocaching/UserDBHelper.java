@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class UserDBHelper extends SQLiteOpenHelper {
 
@@ -91,10 +92,13 @@ public class UserDBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT  * FROM Users WHERE name = ?",
                 new String[]{username});
 
-        if (cursor.getCount() > 0){
-            caches = cursor.getInt(3);
+        if (cursor.moveToFirst()){
+            if (cursor.getCount() > 0){
+                caches = cursor.getInt(3);
+            }
         }
 
+        Log.d("CACHES", Integer.toString(caches));
         cursor.close();
         return caches;
     }

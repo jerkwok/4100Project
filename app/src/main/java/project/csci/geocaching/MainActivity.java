@@ -11,12 +11,13 @@ public class MainActivity extends AppCompatActivity {
     private static final int MAIN_CODE = 1;
     private static final int CACHE_LIST_CODE = 2;
     private Cache trackingCache = new Cache();
-
+    int userCaches;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         String username = getIntent().getStringExtra("username");
+        userCaches = getIntent().getIntExtra("userCaches", 0);
         TextView usernameText = (TextView) findViewById(R.id.username_textview);
         usernameText.setText(getString(R.string.welcome_message,username));
     }
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     public void showCacheList(View view){
         Intent intent = new Intent(this, CacheListActivity.class);
 
-        intent.putExtra("userCaches", getIntent().getIntExtra("userCaches", 0));
+        intent.putExtra("userCaches", userCaches);
         this.startActivityForResult(intent, CACHE_LIST_CODE);
     }
 
@@ -61,5 +62,9 @@ public class MainActivity extends AppCompatActivity {
                     trackingCache.getLat(),
                     trackingCache.getLong()));
         }
+    }
+
+    public void sendDebugMessage(View view) {
+        userCaches = 2;
     }
 }

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.io.BufferedReader;
@@ -26,8 +25,7 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
     ArrayList<Cache> cacheList = new ArrayList<>();
     Cache selected = null;
     String url = "http://pastebin.com/raw/25LhSH2a";
-    private ListView listview;
-    String userCachesbits;
+    String userCachesBits;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +34,8 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        userCachesbits = Integer.toBinaryString(getIntent().getIntExtra("userCaches", 0));
-        Log.d("BITS", userCachesbits);
+        userCachesBits = Integer.toBinaryString(getIntent().getIntExtra("userCaches", 0));
+        Log.d("BITS", userCachesBits);
 
         try{
             InputStream URLstream = OpenHttpConnection(url);
@@ -97,25 +95,44 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
     }
 
     private void refreshDisplay() {
-        listview = (ListView) findViewById(R.id.cache_list);
-        ArrayAdapter<Cache> arrayAdapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_list_item_1,
-                cacheList);
+        ListView listview = (ListView) findViewById(R.id.cache_list);
+//        ArrayAdapter<Cache> arrayAdapter = new ArrayAdapter<>(
+//                this,
+//                android.R.layout.simple_list_item_1,
+//                cacheList);
 
-        listview.setAdapter(arrayAdapter);
+        CacheListAdapter cacheAdapter = new CacheListAdapter(this,android.R.layout.simple_list_item_1,
+                cacheList, userCachesBits);
+
+        listview.setAdapter(cacheAdapter);
         listview.setOnItemClickListener(CacheListActivity.this);
+
+
     }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.d("CLICKED", cacheList.get(position).toString());
+        Log.d("USER CACHES", userCachesBits);
+        Log.d("POSITION", Integer.toString(position));
+        Log.d("SUBSTRING", userCachesBits.substring(userCachesBits.length() - position - 1));
         for(int a = 0; a < parent.getChildCount(); a++)
         {
             parent.getChildAt(a).setBackgroundColor(Color.TRANSPARENT);
         }
 
         view.setBackgroundColor(Color.GREEN);
+
+//        for(int a = 0; a < parent.getChildCount(); a++)
+//        {
+//            if ((position < userCachesBits.length()) &&
+//                    (userCachesBits.charAt(userCachesBits.length() - position - 1) == '1')
+//                    ){
+//                parent.getChildAt(a).setBackgroundColor(Color.BLUE);
+//            }
+//        }
+
         selected = cacheList.get(position);
     }
 

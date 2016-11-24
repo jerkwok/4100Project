@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("username", usernameEditText.getText().toString());
             intent.putExtra("userCaches", database.getUserCaches(usernameEditText.getText().toString()));
+            Log.d("CACHES", Integer.toString(database.getUserCaches(usernameEditText.getText().toString())) );
             startActivity(intent);
         }else{
             //display toast
