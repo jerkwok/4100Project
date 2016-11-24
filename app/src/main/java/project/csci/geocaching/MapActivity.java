@@ -234,7 +234,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.addMarker(new MarkerOptions().position(newLocation)
                     .title("Geocache Information")
                     .snippet("Latitude: " + address.getLatitude() + "\n" +
-                            "Longitude: " + address.getLongitude()));
+                             "Longitude: " + address.getLongitude()));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(newLocation));
         }
     }
