@@ -116,7 +116,7 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         Log.d("CLICKED", cacheList.get(position).toString());
         Log.d("USER CACHES", userCachesBits);
         Log.d("POSITION", Integer.toString(position));
-        Log.d("SUBSTRING", userCachesBits.substring(userCachesBits.length() - position - 1));
+//        Log.d("SUBSTRING", userCachesBits.substring(userCachesBits.length() - position - 1));
         for(int a = 0; a < parent.getChildCount(); a++)
         {
             parent.getChildAt(a).setBackgroundColor(Color.TRANSPARENT);
