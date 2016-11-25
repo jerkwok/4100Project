@@ -175,5 +175,13 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
                                                   * Math.pow((Math.sin(dlong/2)), 2);
         double c = 2 * Math.atan(Math.sqrt(1-a));
         double distance = 6373 * c;
+
+        if (distance <= 0.01) {
+            // Enable claim button.
+
+        } else {
+            // Disable claim button.
+
+        }
     }
 }
