@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -25,6 +26,9 @@ public class LoginActivity extends AppCompatActivity {
 
         passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
+//        CanvasView globeCanvas = (CanvasView) findViewById(R.id.globe_canvas);
+//        Integer dim = (int) (80 / (getResources().getDisplayMetrics().xdpi / 160));
+//        globeCanvas.setLayoutParams(new LinearLayout.LayoutParams( dim, dim));
     }
 
 
