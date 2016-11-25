@@ -19,4 +19,6 @@
     <string name="debug">Debug</string>
     <string name="show_tracking">Tracking</string>
     <string name="duplicate_user">Username Already Taken </string>
+    <string name="claim">Claim</string>
+    <string name="bearing_information">Bearing to Cache:%1$f</string>
 </resources>

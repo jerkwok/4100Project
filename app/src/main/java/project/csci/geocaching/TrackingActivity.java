@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -35,13 +36,14 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         trackingCache.setLat(getIntent().getDoubleExtra("cacheLat", 0));
         trackingCache.setLong(getIntent().getDoubleExtra("cacheLong", 0));
         trackingCache.setDescription(getIntent().getStringExtra("cacheDesc"));
-
-        //TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
-        //trackingInfo.setText(getString(R.string.tracking_information,
-        //        trackingCache.getCacheID(),
-        //        trackingCache.getName(),
-        //        trackingCache.getLat(),
-        //        trackingCache.getLong()));
+        if (getIntent().getBooleanExtra("cacheSelected", false)){
+            TextView trackingInfo = (TextView) findViewById(R.id.tracking_text);
+            trackingInfo.setText(getString(R.string.tracking_information,
+                    trackingCache.getCacheID(),
+                    trackingCache.getName(),
+                    trackingCache.getLat(),
+                    trackingCache.getLong()));
+        }
 
         setupLocationServices();
     }
@@ -176,6 +178,62 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         double c = 2 * Math.atan(Math.sqrt(1-a));
         double distance = 6373 * c;
 
+        TextView distanceText = (TextView) findViewById(R.id.distance_text);
+
+        if (getIntent().getBooleanExtra("cacheSelected", false)) {
+            distanceText.setText("Distance to Cache:" + Double.toString(distance));
+        }else{
+            distanceText.setText("No Active Tracking Cache");
+        }
+
+        if (getIntent().getBooleanExtra("cacheSelected", false)){
+            TextView trackingInfo = (TextView) findViewById(R.id.tracking_text);
+            trackingInfo.setText(getString(R.string.tracking_information,
+                    trackingCache.getCacheID(),
+                    trackingCache.getName(),
+                    trackingCache.getLat(),
+                    trackingCache.getLong()));
+        }
+
+        //BEARING
+//        startLat = math.radians(43.682213)
+//        startLong = math.radians(-70.450696)
+//        endLat = math.radians(43.682194)
+//        endLong = math.radians(-70.450769)
+//
+//        dLong = endLong - startLong
+//
+//        dPhi = math.log(math.tan(endLat/2.0+math.pi/4.0)/math.tan(startLat/2.0+math.pi/4.0))
+//        if abs(dLong) > math.pi:
+//        if dLong > 0.0:
+//        dLong = -(2.0 * math.pi - dLong)
+//        else:
+//        dLong = (2.0 * math.pi + dLong)
+//
+//        bearing = (math.degrees(math.atan2(dLong, dPhi)) + 360.0) % 360.0;
+
+        double dLong = trackingCache.getLong()-currLong;
+        double dPhi = Math.log(Math.tan(trackingCache.getLat()/2.0+Math.PI/4.0) /
+                Math.tan(currLat/2.0+Math.PI/4.0));
+        if (Math.abs(dLong) > Math.PI){
+            if (dLong > 0){
+                dLong = -(2.0 * Math.PI - dLong);
+            } else {
+                dLong = (2.0 * Math.PI + dLong);
+            }
+        }
+
+        double bearing = ((Math.atan2(dLong, dPhi) * (180 / Math.PI)) + 360.0) % 360.0;
+
+//        double y = Math.sin(trackingCache.getLong()-currLong) * Math.cos(trackingCache.getLat());
+//        double x = Math.cos(currLat) * Math.sin(trackingCache.getLat()) -
+//                    Math.sin(currLat) * Math.cos(trackingCache.getLat()) * Math.cos(trackingCache.getLong()-currLong);
+//        double bearing = Math.atan2(y, x) * (180/Math.PI);
+
+        if (getIntent().getBooleanExtra("cacheSelected", false)){
+            TextView bearingInfo = (TextView) findViewById(R.id.bearing_text);
+            bearingInfo.setText(getString(R.string.bearing_information, (bearing + 180) % 360));
+        }
         if (distance <= 0.01) {
             // Enable claim button.
 
@@ -183,5 +241,17 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
             // Disable claim button.
 
         }
+    }
+
+    public void claimClicked(View view) {
+        Intent output = new Intent();
+        setResult(RESULT_OK,output);
+        finish();
+    }
+
+    public void backClicked(View view) {
+        Intent output = new Intent();
+        setResult(RESULT_CANCELED,output);
+        finish();
     }
 }

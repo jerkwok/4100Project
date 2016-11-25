@@ -102,4 +102,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
         cursor.close();
         return caches;
     }
+
+    public void updateUserCache(String username, int caches){
+
+    }
 }
