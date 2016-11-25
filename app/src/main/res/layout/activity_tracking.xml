@@ -25,6 +25,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/bearing_text"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/current_bearing_text"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

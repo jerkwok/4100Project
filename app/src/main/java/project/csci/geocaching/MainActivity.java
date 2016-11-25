@@ -77,14 +77,21 @@ public class MainActivity extends AppCompatActivity {
             //set new cache value for user
             int newCacheValue = 0;
             String oldCaches = Integer.toBinaryString(database.getUserCaches(getIntent().getStringExtra("username")));
-
-            if ((data.getIntExtra("cacheID", 0) < oldCaches.length()) &&
-                    (oldCaches.substring(oldCaches.length() - data.getIntExtra("cacheID", 0) - 1).charAt(0) == '0')
+            Log.d("OLD CACHES", oldCaches);
+            Log.d("CACHE ID", Integer.toString(trackingCache.getCacheID()));
+            if ((trackingCache.getCacheID() >= oldCaches.length()) ||
+                    (oldCaches.substring(oldCaches.length() - trackingCache.getCacheID() - 1).charAt(0) == '0')
                     ){
-                    newCacheValue = database.getUserCaches(getIntent().getStringExtra("username")) + 2^data.getIntExtra("cacheID", 0);
+                        double power = Math.pow(2, trackingCache.getCacheID());
+                        int intPower = (int) power;
+                    newCacheValue = database.getUserCaches(getIntent().getStringExtra("username"))
+                        +  intPower;
+
+                database.updateUserCache(getIntent().getStringExtra("username"),newCacheValue );
+                userCaches = newCacheValue;
             }
+            Log.d("NEW CACHE VALUE", Integer.toString(newCacheValue));
             //write to database
-            database.updateUserCache(getIntent().getStringExtra("username"),newCacheValue );
         }
     }
 

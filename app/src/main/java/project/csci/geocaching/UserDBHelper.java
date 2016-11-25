@@ -11,6 +11,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Users.db";
     private static final int DATABASE_VERSION = 1;
+    private static final String TABLE_NAME = "Users";
 
     public UserDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -18,13 +19,13 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS Users(userId INTEGER PRIMARY KEY,name TEXT, password TEXT, caches INTEGER)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(userId INTEGER PRIMARY KEY,name TEXT, password TEXT, caches INTEGER)");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS Users");
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
 
@@ -44,7 +45,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public User getUser(int userId){
         User returnUser = null;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT  * FROM Users WHERE userId = ?",
+        Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_NAME + " WHERE userId = ?",
                 new String[]{Integer.toString(userId)});
 
         if (cursor.moveToFirst()){
@@ -59,7 +60,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public boolean validatePass(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         boolean match = false;
-        Cursor cursor = db.rawQuery("SELECT  * FROM Users WHERE name = ?",
+        Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_NAME + " WHERE name = ?",
                 new String[]{username});
 
         if (cursor.moveToFirst()){
@@ -75,7 +76,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public boolean checkUserDupes(String username){
         SQLiteDatabase db = this.getReadableDatabase();
         boolean match = false;
-        Cursor cursor = db.rawQuery("SELECT  * FROM Users WHERE name = ?",
+        Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_NAME + " WHERE name = ?",
                 new String[]{username});
 
         if (cursor.getCount() > 0){
@@ -89,7 +90,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public int getUserCaches(String username){
         SQLiteDatabase db = this.getReadableDatabase();
         int caches = 0;
-        Cursor cursor = db.rawQuery("SELECT  * FROM Users WHERE name = ?",
+        Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_NAME + " WHERE name = ?",
                 new String[]{username});
 
         if (cursor.moveToFirst()){
@@ -104,6 +105,13 @@ public class UserDBHelper extends SQLiteOpenHelper {
     }
 
     public void updateUserCache(String username, int caches){
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues newValues = new ContentValues();
+        newValues.put("caches", caches);
+
+        String[] args = new String[]{username};
+
+        db.update(TABLE_NAME, newValues,"name=?" , args);
     }
 }

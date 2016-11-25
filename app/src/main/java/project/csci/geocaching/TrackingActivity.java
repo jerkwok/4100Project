@@ -4,6 +4,10 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -22,9 +26,15 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class TrackingActivity extends AppCompatActivity implements LocationListener {
+public class TrackingActivity extends AppCompatActivity implements LocationListener, SensorEventListener {
 
     private Cache trackingCache = new Cache();
+    float[] mGravity;
+    float[] mGeomagnetic;
+    Float azimut;
+    private SensorManager mSensorManager;
+    Sensor accelerometer;
+    Sensor magnetometer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +56,9 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         }
 
         setupLocationServices();
+        mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
     }
     private void setupLocationServices() {
         requestLocationPermissions();
@@ -62,11 +75,17 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mSensorManager.unregisterListener(this);
+    }
+
     /*
-       Sample data:
-         CN Tower:      43.6426, -79.3871
-         Eiffel Tower:  48.8582,   2.2945
-     */
+           Sample data:
+             CN Tower:      43.6426, -79.3871
+             Eiffel Tower:  48.8582,   2.2945
+         */
     @SuppressLint("NewApi")
     private void updateLocation() {
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -107,6 +126,13 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
             return;
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+        mSensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
@@ -212,23 +238,18 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
 //
 //        bearing = (math.degrees(math.atan2(dLong, dPhi)) + 360.0) % 360.0;
 
-        double dLong = trackingCache.getLong()-currLong;
-        double dPhi = Math.log(Math.tan(trackingCache.getLat()/2.0+Math.PI/4.0) /
-                Math.tan(currLat/2.0+Math.PI/4.0));
-        if (Math.abs(dLong) > Math.PI){
-            if (dLong > 0){
-                dLong = -(2.0 * Math.PI - dLong);
-            } else {
-                dLong = (2.0 * Math.PI + dLong);
-            }
-        }
 
-        double bearing = ((Math.atan2(dLong, dPhi) * (180 / Math.PI)) + 360.0) % 360.0;
+        double bearing = getBearing(currLong, currLat,trackingCache.getLong(),trackingCache.getLat() );
+
 
 //        double y = Math.sin(trackingCache.getLong()-currLong) * Math.cos(trackingCache.getLat());
 //        double x = Math.cos(currLat) * Math.sin(trackingCache.getLat()) -
 //                    Math.sin(currLat) * Math.cos(trackingCache.getLat()) * Math.cos(trackingCache.getLong()-currLong);
 //        double bearing = Math.atan2(y, x) * (180/Math.PI);
+
+
+        TextView currentBearingInfo = (TextView) findViewById(R.id.current_bearing_text);
+        currentBearingInfo.setText(getString(R.string.bearing_information, (bearing + 180) % 360));
 
         if (getIntent().getBooleanExtra("cacheSelected", false)){
             TextView bearingInfo = (TextView) findViewById(R.id.bearing_text);
@@ -253,5 +274,57 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         Intent output = new Intent();
         setResult(RESULT_CANCELED,output);
         finish();
+    }
+
+    public double getBearing(double currLong, double currLat, double endLong, double endLat) {
+//        double dLong = currLong-endLong;
+//        double dPhi = Math.log(Math.tan(endLat/2.0+Math.PI/4.0) /
+//                Math.tan(currLat/2.0+Math.PI/4.0));
+//        if (Math.abs(dLong) > Math.PI){
+//            if (dLong > 0){
+//                dLong = -(2.0 * Math.PI - dLong);
+//            } else {
+//                dLong = (2.0 * Math.PI + dLong);
+//            }
+//        }
+//        dLong = Math.abs(dLong);
+//
+//        if (dLong > 180){
+//            dLong = dLong % 180;
+//        }
+//
+//        return Math.toDegrees(Math.atan2(dLong, dPhi));
+
+        double y = Math.sin(endLong - currLong);
+        double x = Math.cos(currLat) * Math.sin(endLat) -
+                Math.sin(currLat) * Math.cos(endLat) * Math.cos(endLong - currLong);
+
+        return Math.toDegrees(Math.atan2(y, x));
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+            mGravity = event.values;
+        if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
+            mGeomagnetic = event.values;
+        if (mGravity != null && mGeomagnetic != null) {
+            float R[] = new float[9];
+            float I[] = new float[9];
+            boolean success = SensorManager.getRotationMatrix(R, I, mGravity, mGeomagnetic);
+            if (success) {
+                float orientation[] = new float[3];
+                SensorManager.getOrientation(R, orientation);
+                azimut = orientation[0]; // orientation contains: azimut, pitch and roll
+//                Log.d("Azimut", Float.toString(azimut));
+                Log.d("Azimut", Float.toString( ((float)Math.toDegrees(azimut)+360)%360));
+            }
+        }
+//        mCustomDrawableView.invalidate();
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }
