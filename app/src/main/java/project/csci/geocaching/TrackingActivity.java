@@ -36,7 +36,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         trackingCache.setLong(getIntent().getDoubleExtra("cacheLong", 0));
         trackingCache.setDescription(getIntent().getStringExtra("cacheDesc"));
 
-        TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
+        //TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
         //trackingInfo.setText(getString(R.string.tracking_information,
         //        trackingCache.getCacheID(),
         //        trackingCache.getName(),
@@ -168,6 +168,12 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         double currLat = address.getLatitude();
         double currLong = address.getLongitude();
 
-
+        double dlat = trackingCache.getLat() - currLat;
+        double dlong = trackingCache.getLong() - currLong;
+        double a = Math.pow((Math.sin(dlat/2)), 2) + Math.cos(currLat)
+                                                  * Math.cos(trackingCache.getLat())
+                                                  * Math.pow((Math.sin(dlong/2)), 2);
+        double c = 2 * Math.atan(Math.sqrt(1-a));
+        double distance = 6373 * c;
     }
 }
