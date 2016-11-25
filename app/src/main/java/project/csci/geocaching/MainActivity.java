@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showTracking(View view) {
-        Intent i = new Intent(this, MapActivity.class);
+        Intent i = new Intent(this, TrackingActivity.class);
         if (trackingCache.getCacheID() != -1){
             i.putExtra("cacheSelected", true);
             i.putExtra("cacheID", trackingCache.getCacheID());
