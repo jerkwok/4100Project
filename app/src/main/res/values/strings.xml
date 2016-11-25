@@ -18,4 +18,5 @@
     <string name="tracking_information">You\'re Tracking Cache ID:%1$d, Title:%2$s, Lat:%3$f, Long:%4$f</string>
     <string name="debug">Debug</string>
     <string name="show_tracking">Tracking</string>
+    <string name="duplicate_user">Username Already Taken </string>
 </resources>

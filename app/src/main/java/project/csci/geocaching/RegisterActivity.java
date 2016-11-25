@@ -53,7 +53,9 @@ public class RegisterActivity extends AppCompatActivity {
             output.putExtra("username",usernameText.getText().toString() );
             setResult(RESULT_OK,output);
             finish();
-        }else{
+        }else if (database.checkUserDupes(usernameText.getText().toString())) {
+            Toast.makeText(this, getString(R.string.duplicate_user), Toast.LENGTH_SHORT).show();
+        }else {
             //display toast, passwords don't match
             Toast.makeText(this, getString(R.string.password_dont_match), Toast.LENGTH_SHORT).show();
         }
