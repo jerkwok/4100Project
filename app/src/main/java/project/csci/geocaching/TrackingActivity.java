@@ -35,6 +35,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
     private SensorManager mSensorManager;
     Sensor accelerometer;
     Sensor magnetometer;
+    TextView azimuthView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        azimuthView = (TextView) findViewById(R.id.azumith_text);
     }
     private void setupLocationServices() {
         requestLocationPermissions();
@@ -221,39 +223,16 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
                     trackingCache.getLong()));
         }
 
-        //BEARING
-//        startLat = math.radians(43.682213)
-//        startLong = math.radians(-70.450696)
-//        endLat = math.radians(43.682194)
-//        endLong = math.radians(-70.450769)
-//
-//        dLong = endLong - startLong
-//
-//        dPhi = math.log(math.tan(endLat/2.0+math.pi/4.0)/math.tan(startLat/2.0+math.pi/4.0))
-//        if abs(dLong) > math.pi:
-//        if dLong > 0.0:
-//        dLong = -(2.0 * math.pi - dLong)
-//        else:
-//        dLong = (2.0 * math.pi + dLong)
-//
-//        bearing = (math.degrees(math.atan2(dLong, dPhi)) + 360.0) % 360.0;
-
-
         double bearing = getBearing(currLong, currLat,trackingCache.getLong(),trackingCache.getLat() );
-
-
-//        double y = Math.sin(trackingCache.getLong()-currLong) * Math.cos(trackingCache.getLat());
-//        double x = Math.cos(currLat) * Math.sin(trackingCache.getLat()) -
-//                    Math.sin(currLat) * Math.cos(trackingCache.getLat()) * Math.cos(trackingCache.getLong()-currLong);
-//        double bearing = Math.atan2(y, x) * (180/Math.PI);
+        bearing = (bearing / Math.PI) * 180;
 
 
         TextView currentBearingInfo = (TextView) findViewById(R.id.current_bearing_text);
-        currentBearingInfo.setText(getString(R.string.bearing_information, (bearing + 180) % 360));
+        currentBearingInfo.setText(getString(R.string.bearing_information, bearing));
 
         if (getIntent().getBooleanExtra("cacheSelected", false)){
             TextView bearingInfo = (TextView) findViewById(R.id.bearing_text);
-            bearingInfo.setText(getString(R.string.bearing_information, (bearing + 180) % 360));
+            bearingInfo.setText(getString(R.string.bearing_information, bearing));
         }
         if (distance <= 0.01) {
             // Enable claim button.
@@ -277,29 +256,11 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
     }
 
     public double getBearing(double currLong, double currLat, double endLong, double endLat) {
-//        double dLong = currLong-endLong;
-//        double dPhi = Math.log(Math.tan(endLat/2.0+Math.PI/4.0) /
-//                Math.tan(currLat/2.0+Math.PI/4.0));
-//        if (Math.abs(dLong) > Math.PI){
-//            if (dLong > 0){
-//                dLong = -(2.0 * Math.PI - dLong);
-//            } else {
-//                dLong = (2.0 * Math.PI + dLong);
-//            }
-//        }
-//        dLong = Math.abs(dLong);
-//
-//        if (dLong > 180){
-//            dLong = dLong % 180;
-//        }
-//
-//        return Math.toDegrees(Math.atan2(dLong, dPhi));
 
-        double y = Math.sin(endLong - currLong);
-        double x = Math.cos(currLat) * Math.sin(endLat) -
-                Math.sin(currLat) * Math.cos(endLat) * Math.cos(endLong - currLong);
-
-        return Math.toDegrees(Math.atan2(y, x));
+        double y = Math.abs(currLong - endLong);
+        double x =Math.log( Math.tan(endLat/2.0 + Math.PI/4.0) /
+                Math.tan(currLat/2.0 + Math.PI/4.0));
+        return (Math.atan2(y, x));
     }
 
     @Override
@@ -316,11 +277,9 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
                 float orientation[] = new float[3];
                 SensorManager.getOrientation(R, orientation);
                 azimut = orientation[0]; // orientation contains: azimut, pitch and roll
-//                Log.d("Azimut", Float.toString(azimut));
-                Log.d("Azimut", Float.toString( ((float)Math.toDegrees(azimut)+360)%360));
+                azimuthView.setText("Device Bearing:" + Float.toString( ((float)Math.toDegrees(azimut)+360)%360));
             }
         }
-//        mCustomDrawableView.invalidate();
     }
 
     @Override
