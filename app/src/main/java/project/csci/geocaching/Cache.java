@@ -74,4 +74,14 @@ public class Cache {
                 ", description='" + description + '\'' +
                 '}';
     }
+
+    public String getInfo(){
+        return "ID=" + cacheID +
+                ", name=" + name;
+    }
+
+    public String getLoc(){
+        return "Location:" + latitude +
+        "," + longitude;
+    }
 }

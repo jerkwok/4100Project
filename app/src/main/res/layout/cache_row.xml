@@ -8,14 +8,26 @@
         android:id="@+id/cache_row_1"
         android:layout_height="wrap_content">
 
-        <TextView android:textColor="#000000"
-            android:id="@+id/row_text_view"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:gravity="start"
-            android:layout_weight="1"
-            android:typeface="monospace"
-            android:height="40sp" />
+        <RelativeLayout>
+            <TextView android:textColor="#000000"
+                android:id="@+id/row_cache_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start" />
+
+            <TextView android:textColor="#000000"
+                android:id="@+id/row_cache_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_toEndOf="@id/row_cache_info"/>
+
+            <TextView android:textColor="#000000"
+                android:id="@+id/row_cache_desc"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_below="@id/row_cache_info"/>
+        </RelativeLayout>
     </TableRow>
 </TableLayout>
