@@ -23,7 +23,7 @@ public class CanvasView extends View {
     public static final int TOTAL_WIDTH = 640;
     public static final int TOTAL_HEIGHT = 160;
 
-    public static final int SPEED = 200;
+    public static final int SPEED = 100;
 
     private Bitmap spriteSheetBitmap;
 
