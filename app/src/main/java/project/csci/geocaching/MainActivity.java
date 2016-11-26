@@ -24,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
         username = getIntent().getStringExtra("username");
         userCaches = getIntent().getIntExtra("userCaches", 0);
         TextView usernameText = (TextView) findViewById(R.id.username_textview);
-        usernameText.setText(getString(R.string.welcome_message,username));
+        usernameText.setText(getString(R.string.welcome_message1,username));
+        TextView welcomeText = (TextView) findViewById(R.id.welcome_textview);
+        welcomeText.setText(getString(R.string.welcome_message2));
     }
 
     public void showCacheList(View view){
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     trackingCache.getName(),
                     trackingCache.getLat(),
                     trackingCache.getLong()));
+
         }else if ((requestCode == TRACKING_CODE) && (resultCode == RESULT_OK)){
             //cache successfully claimed
 
