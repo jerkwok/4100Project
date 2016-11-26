@@ -61,6 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/trackingButton"
+            android:drawableLeft="@android:drawable/ic_menu_search"
             android:onClick="showTracking"
             android:text="@string/show_tracking"
             android:layout_above="@+id/logoutButton"/>
