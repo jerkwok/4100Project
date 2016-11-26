@@ -17,7 +17,8 @@
         android:id="@+id/username_textview"
         android:layout_gravity="center_horizontal"
         android:textSize="25dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,7 +26,8 @@
         android:id="@+id/welcome_textview"
         android:layout_gravity="center_horizontal"
         android:textSize="20dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"/>
     
     <TextView
         android:layout_width="wrap_content"
