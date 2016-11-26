@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         }else{
             //display toast
-            Toast.makeText(this, getString(R.string.password_dont_match), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -34,7 +34,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
     private Cache trackingCache = new Cache();
     float[] mGravity;
     float[] mGeomagnetic;
-    Float azimut;
+    Float azimut = 0f;
     private SensorManager mSensorManager;
     Sensor accelerometer;
     Sensor magnetometer;
@@ -59,11 +59,12 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
                     trackingCache.getLong()));
         }
 
+        azimuthView = (TextView) findViewById(R.id.azumith_text);
         setupLocationServices();
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        azimuthView = (TextView) findViewById(R.id.azumith_text);
+
     }
     private void setupLocationServices() {
         requestLocationPermissions();
@@ -239,11 +240,11 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
 
 
         TextView currentBearingInfo = (TextView) findViewById(R.id.current_bearing_text);
-        currentBearingInfo.setText(getString(R.string.bearing_information, bearing));
+        currentBearingInfo.setText(getString(R.string.device_bearing, bearing));
 
         if (getIntent().getBooleanExtra("cacheSelected", false)){
             TextView bearingInfo = (TextView) findViewById(R.id.bearing_text);
-            bearingInfo.setText(getString(R.string.bearing_information, bearing));
+            bearingInfo.setText(getString(R.string.bearing_information, bearing - azimut));
         }
 
         Button claimButton = (Button)findViewById(R.id.claim_button);
@@ -288,8 +289,8 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
             if (success) {
                 float orientation[] = new float[3];
                 SensorManager.getOrientation(R, orientation);
-                azimut = orientation[0]; // orientation contains: azimut, pitch and roll
-                azimuthView.setText("Device Bearing:" + Float.toString( ((float)Math.toDegrees(azimut)+360)%360));
+                azimut = ((float)Math.toDegrees(orientation[0])+360)%360;
+                azimuthView.setText("Device Bearing:" + Float.toString( azimut));
             }
         }
     }

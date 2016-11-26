@@ -24,4 +24,6 @@
     <string name="claim">Claim</string>
     <string name="bearing_information">Bearing to Cache:%1$f</string>
     <string name="title">GeoCaching</string>
+    <string name="device_bearing">Device\'s Bearing: %1$f</string>
+    <string name="login_fail">Login Unsuccessful</string>
 </resources>
