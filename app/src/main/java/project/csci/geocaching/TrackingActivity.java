@@ -29,6 +29,8 @@ import java.util.Locale;
 
 public class TrackingActivity extends AppCompatActivity implements LocationListener, SensorEventListener {
 
+    private static final int EARTH_RADIUS = 6373;
+
     private Cache trackingCache = new Cache();
     float[] mGravity;
     float[] mGeomagnetic;
@@ -197,13 +199,21 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         double currLat = address.getLatitude();
         double currLong = address.getLongitude();
 
-        double dlat = trackingCache.getLat() - currLat;
-        double dlong = trackingCache.getLong() - currLong;
-        double a = Math.pow((Math.sin(dlat/2)), 2) + Math.cos(currLat)
-                                                  * Math.cos(trackingCache.getLat())
-                                                  * Math.pow((Math.sin(dlong/2)), 2);
-        double c = 2 * Math.atan(Math.sqrt(1-a));
-        double distance = 6373 * c;
+        double currRadLat = currLat*(Math.PI/180);
+        double currRadLong = currLong*(Math.PI/180);
+        double targetRadLat = trackingCache.getLat()*(Math.PI/180);
+        double targetRadLong = trackingCache.getLong()*(Math.PI/180);
+
+        double dlat = targetRadLat - currRadLat;
+        double dlong = targetRadLong - currRadLong;
+
+        double a = Math.pow((Math.sin(dlat/2)),2) +
+                   Math.cos(currRadLat) *
+                   Math.cos(targetRadLat) *
+                   Math.pow((Math.sin(dlong/2)),2);
+
+        double c = 2 * (Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));
+        double distance = EARTH_RADIUS * c;
 
         TextView distanceText = (TextView) findViewById(R.id.distance_text);
 
@@ -319,7 +329,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
                 SensorManager.getOrientation(R, orientation);
                 azimut = orientation[0]; // orientation contains: azimut, pitch and roll
 //                Log.d("Azimut", Float.toString(azimut));
-                Log.d("Azimut", Float.toString( ((float)Math.toDegrees(azimut)+360)%360));
+               // Log.d("Azimut", Float.toString( ((float)Math.toDegrees(azimut)+360)%360));
             }
         }
 //        mCustomDrawableView.invalidate();
