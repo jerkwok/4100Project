@@ -24,8 +24,8 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
 
     ArrayList<Cache> cacheList = new ArrayList<>();
     Cache selected = null;
-//    String url = "http://pastebin.com/raw/Gq23ySAB";
-    String url = "http://pastebin.com/raw/Shp3WRa4";
+    String url = "http://pastebin.com/raw/Gq23ySAB";
+//    String url = "http://pastebin.com/raw/Shp3WRa4";
     String userCachesBits;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,17 +124,20 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         }
 
         view.setBackgroundColor(Color.GREEN);
+        selected = cacheList.get(position);
 
         for(int a = 0; a < parent.getChildCount(); a++)
         {
             if ((a < userCachesBits.length()) &&
                     (userCachesBits.substring(userCachesBits.length() - a - 1).charAt(0) == '1')
                     ){
+                if (a == position){
+                    selected = null;
+                }
                 parent.getChildAt(a).setBackgroundColor(Color.BLUE);
             }
         }
 
-        selected = cacheList.get(position);
     }
 
     public void trackClicked(View view) {
@@ -145,8 +148,10 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
             output.putExtra("cacheLat", selected.getLat());
             output.putExtra("cacheLong", selected.getLong());
             output.putExtra("cacheDesc", selected.getDescription());
+            setResult(RESULT_OK,output);
+        }else{
+            setResult(RESULT_CANCELED, output);
         }
-        setResult(RESULT_OK,output);
         finish();
     }
 }
