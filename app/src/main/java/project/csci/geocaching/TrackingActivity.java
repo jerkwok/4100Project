@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -255,12 +256,13 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
             TextView bearingInfo = (TextView) findViewById(R.id.bearing_text);
             bearingInfo.setText(getString(R.string.bearing_information, (bearing + 180) % 360));
         }
+
+        Button claimButton = (Button)findViewById(R.id.claim_button);
+
         if (distance <= 0.01) {
-            // Enable claim button.
-
+            claimButton.setEnabled(true);
         } else {
-            // Disable claim button.
-
+            claimButton.setEnabled(false);
         }
     }
 
