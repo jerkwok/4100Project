@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.io.BufferedReader;
@@ -118,12 +119,19 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         Log.d("USER CACHES", userCachesBits);
         Log.d("POSITION", Integer.toString(position));
 //        Log.d("SUBSTRING", userCachesBits.substring(userCachesBits.length() - position - 1));
+        ImageView statusImage;
         for(int a = 0; a < parent.getChildCount(); a++)
         {
-            parent.getChildAt(a).setBackgroundColor(Color.TRANSPARENT);
+            statusImage = (ImageView) parent.getChildAt(a).findViewById(R.id.status_image);
+            statusImage.setImageResource(0);
+//            parent.getChildAt(a).setBackgroundColor(Color.TRANSPARENT);
         }
 
-        view.setBackgroundColor(Color.GREEN);
+//        view.setBackgroundColor(Color.GREEN);
+        statusImage = (ImageView) parent.getChildAt(position).findViewById(R.id.status_image);
+
+        statusImage.setImageResource(R.drawable.magnifying);
+
         selected = cacheList.get(position);
 
         for(int a = 0; a < parent.getChildCount(); a++)
@@ -134,7 +142,9 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
                 if (a == position){
                     selected = null;
                 }
-                parent.getChildAt(a).setBackgroundColor(Color.BLUE);
+                statusImage = (ImageView) parent.getChildAt(a).findViewById(R.id.status_image);
+//                parent.getChildAt(a).setBackgroundColor(Color.BLUE);
+                statusImage.setImageResource(R.drawable.star);
             }
         }
 

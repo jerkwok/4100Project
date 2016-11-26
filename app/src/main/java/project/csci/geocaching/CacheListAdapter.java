@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -41,7 +42,7 @@ public class CacheListAdapter extends ArrayAdapter<Cache> {
         TextView cacheText = (TextView) rowView.findViewById(R.id.row_cache_info);
         TextView cacheLoc = (TextView) rowView.findViewById(R.id.row_cache_loc);
         TextView cacheDesc = (TextView) rowView.findViewById(R.id.row_cache_desc);
-
+        ImageView statusImage = (ImageView) rowView.findViewById(R.id.status_image);
         cacheText.setText(cachesList.get(position).getInfo());
 //        cacheText.setText(cachesList.get(position).getName());
         cacheLoc.setText(cachesList.get(position).getLoc());
@@ -53,7 +54,9 @@ public class CacheListAdapter extends ArrayAdapter<Cache> {
         if ((position < caches.length()) &&
                 (caches.substring(caches.length() - position - 1).charAt(0) == '1')
                 ){
-            rowView.setBackgroundColor(Color.BLUE);
+//            rowView.setBackgroundColor(Color.BLUE);
+            statusImage.setImageResource(R.drawable.star);
+
         }
         return rowView;
     }

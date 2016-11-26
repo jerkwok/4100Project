@@ -9,11 +9,18 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout>
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/status_image"/>
+
             <TextView android:textColor="#000000"
                 android:id="@+id/row_cache_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="start" />
+                android:gravity="start"
+                android:layout_alignTop="@id/status_image"
+                android:layout_toEndOf="@id/status_image"/>
 
             <TextView android:textColor="#000000"
                 android:id="@+id/row_cache_loc"
@@ -27,7 +34,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:layout_below="@id/row_cache_info"/>
+                android:layout_below="@id/row_cache_info"
+                android:layout_toEndOf="@id/status_image"/>
         </RelativeLayout>
     </TableRow>
 </TableLayout>

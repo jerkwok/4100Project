@@ -254,10 +254,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 "Longitude: " + cacheLong)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             }
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(currLocation));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currLocation,19.0f));
             mMap.getUiSettings().setZoomControlsEnabled(true);
             mMap.getUiSettings().setCompassEnabled(true);
-            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         }
     }
 

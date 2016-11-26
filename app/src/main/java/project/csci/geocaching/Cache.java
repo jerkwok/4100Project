@@ -76,12 +76,12 @@ public class Cache {
     }
 
     public String getInfo(){
-        return "ID=" + cacheID +
-                ", name=" + name;
+        return cacheID +
+                ", " + name;
     }
 
     public String getLoc(){
-        return "Location:" + latitude +
+        return " " + latitude +
         "," + longitude;
     }
 }
