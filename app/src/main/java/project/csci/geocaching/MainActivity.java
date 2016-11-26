@@ -120,10 +120,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void sendDebugMessage(View view) {
-        userCaches = 2;
-    }
-
     public void showTracking(View view) {
         Intent i = new Intent(this, TrackingActivity.class);
         if (trackingCache.getCacheID() != -1){
