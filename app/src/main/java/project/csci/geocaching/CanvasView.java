@@ -23,7 +23,7 @@ public class CanvasView extends View {
     public static final int TOTAL_WIDTH = 640;
     public static final int TOTAL_HEIGHT = 160;
 
-    public static final int SPEED = 100;
+    public static final int SPEED = 200;
 
     private Bitmap spriteSheetBitmap;
 
@@ -51,7 +51,7 @@ public class CanvasView extends View {
     }
 
     private void prepareAnimation() {
-        spriteSheetBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ss3);
+        spriteSheetBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.globe);
 
         // un-scale the bitmap (compensate for density scaling)
         spriteSheetBitmap = Bitmap.createScaledBitmap(spriteSheetBitmap, TOTAL_WIDTH, TOTAL_HEIGHT, false);
