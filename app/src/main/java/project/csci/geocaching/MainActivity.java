@@ -5,6 +5,9 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,6 +20,25 @@ public class MainActivity extends AppCompatActivity {
     int userCaches;
     String username;
     UserDBHelper database = new UserDBHelper(this);
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.main:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
         username = getIntent().getStringExtra("username");
         userCaches = getIntent().getIntExtra("userCaches", 0);
         TextView usernameText = (TextView) findViewById(R.id.username_textview);
-        usernameText.setText(getString(R.string.welcome_message,username));
+        usernameText.setText(getString(R.string.welcome_message1,username));
+        TextView welcomeText = (TextView) findViewById(R.id.welcome_textview);
+        welcomeText.setText(getString(R.string.welcome_message2));
     }
 
     public void showCacheList(View view){
@@ -71,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     trackingCache.getName(),
                     trackingCache.getLat(),
                     trackingCache.getLong()));
+
         }else if ((requestCode == TRACKING_CODE) && (resultCode == RESULT_OK)){
             //cache successfully claimed
 
@@ -93,10 +118,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d("NEW CACHE VALUE", Integer.toString(newCacheValue));
             //write to database
         }
-    }
-
-    public void sendDebugMessage(View view) {
-        userCaches = 2;
     }
 
     public void showTracking(View view) {

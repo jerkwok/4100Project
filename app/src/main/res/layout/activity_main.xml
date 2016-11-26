@@ -14,40 +14,65 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/username_textview"/>
+        android:id="@+id/username_textview"
+        android:layout_gravity="center_horizontal"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tracking_textview"/>
-
-    <Button
-        android:layout_width="match_parent"
+        android:id="@+id/welcome_textview"
+        android:layout_gravity="center_horizontal"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"/>
+    
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="showMap"
-        android:text="@string/show_map"/>
+        android:id="@+id/tracking_textview"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="17dp"/>
 
-    <Button
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="showCacheList"
-        android:text="@string/show_cache_list"/>
+        android:layout_height="match_parent">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="showTracking"
-        android:text="@string/show_tracking"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/showMapButton"
+            android:onClick="showMap"
+            android:text="@string/show_map"
+            android:layout_above="@+id/showCacheButton"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/logout"
-        android:onClick="sendLogoutMessage"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/showCacheButton"
+            android:onClick="showCacheList"
+            android:text="@string/show_cache_list"
+            android:layout_above="@+id/trackingButton"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/debug"
-        android:onClick="sendDebugMessage"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/trackingButton"
+            android:onClick="showTracking"
+            android:text="@string/show_tracking"
+            android:layout_above="@+id/logoutButton"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/logoutButton"
+            android:text="@string/logout"
+            android:onClick="sendLogoutMessage"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="40dp"/>
+    </RelativeLayout>
+
 </LinearLayout>

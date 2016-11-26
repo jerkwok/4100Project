@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -27,6 +28,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class TrackingActivity extends AppCompatActivity implements LocationListener, SensorEventListener {
+
+    private static final int EARTH_RADIUS = 6373;
 
     private Cache trackingCache = new Cache();
     float[] mGravity;
@@ -198,13 +201,21 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         double currLat = address.getLatitude();
         double currLong = address.getLongitude();
 
-        double dlat = trackingCache.getLat() - currLat;
-        double dlong = trackingCache.getLong() - currLong;
-        double a = Math.pow((Math.sin(dlat/2)), 2) + Math.cos(currLat)
-                                                  * Math.cos(trackingCache.getLat())
-                                                  * Math.pow((Math.sin(dlong/2)), 2);
-        double c = 2 * Math.atan(Math.sqrt(1-a));
-        double distance = 6373 * c;
+        double currRadLat = Math.toRadians(currLat);
+        double currRadLong = Math.toRadians(currLong);
+        double targetRadLat = Math.toRadians(trackingCache.getLat());
+        double targetRadLong = Math.toRadians(trackingCache.getLong());
+
+        double dlat = targetRadLat - currRadLat;
+        double dlong = targetRadLong - currRadLong;
+
+        double a = Math.pow((Math.sin(dlat/2)),2) +
+                   Math.cos(currRadLat) *
+                   Math.cos(targetRadLat) *
+                   Math.pow((Math.sin(dlong/2)),2);
+
+        double c = 2 * (Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));
+        double distance = EARTH_RADIUS * c;
 
         TextView distanceText = (TextView) findViewById(R.id.distance_text);
 
@@ -234,12 +245,13 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
             TextView bearingInfo = (TextView) findViewById(R.id.bearing_text);
             bearingInfo.setText(getString(R.string.bearing_information, bearing));
         }
+
+        Button claimButton = (Button)findViewById(R.id.claim_button);
+
         if (distance <= 0.01) {
-            // Enable claim button.
-
+            claimButton.setEnabled(true);
         } else {
-            // Disable claim button.
-
+            claimButton.setEnabled(false);
         }
     }
 
