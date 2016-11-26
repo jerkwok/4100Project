@@ -31,6 +31,12 @@ public class LoginActivity extends AppCompatActivity {
 //        globeCanvas.setLayoutParams(new LinearLayout.LayoutParams( dim, dim));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        passwordText = (EditText) findViewById(R.id.password_entry);
+        passwordText.setText("");
+    }
 
     public void sendLoginMessage(View view){
         EditText usernameEditText = (EditText) findViewById(R.id.username_entry);

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:id="@+id/cache_row_1"
-        android:layout_height="wrap_content">
+    <!--<TableRow-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:id="@+id/cache_row_1"-->
+        <!--android:layout_height="wrap_content">-->
 
-        <RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent">
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -23,19 +25,21 @@
                 android:layout_toEndOf="@id/status_image"/>
 
             <TextView android:textColor="#000000"
-                android:id="@+id/row_cache_loc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:layout_toEndOf="@id/row_cache_info"/>
-
-            <TextView android:textColor="#000000"
                 android:id="@+id/row_cache_desc"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:layout_below="@id/row_cache_info"
                 android:layout_toEndOf="@id/status_image"/>
+
+            <TextView android:textColor="#000000"
+                android:id="@+id/row_cache_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_alignParentRight="true"/>
+                <!--android:layout_alignEnd="@id/row_cache_desc"-->
+                />
         </RelativeLayout>
-    </TableRow>
+    <!--</TableRow>-->
 </TableLayout>

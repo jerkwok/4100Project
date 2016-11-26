@@ -43,8 +43,8 @@ public class CacheListAdapter extends ArrayAdapter<Cache> {
         TextView cacheLoc = (TextView) rowView.findViewById(R.id.row_cache_loc);
         TextView cacheDesc = (TextView) rowView.findViewById(R.id.row_cache_desc);
         ImageView statusImage = (ImageView) rowView.findViewById(R.id.status_image);
-        cacheText.setText(cachesList.get(position).getInfo());
-//        cacheText.setText(cachesList.get(position).getName());
+//        cacheText.setText(cachesList.get(position).getInfo());
+        cacheText.setText(cachesList.get(position).getName());
         cacheLoc.setText(cachesList.get(position).getLoc());
         cacheDesc.setText(cachesList.get(position).getDescription());
 
