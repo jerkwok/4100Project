@@ -199,10 +199,10 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         double currLat = address.getLatitude();
         double currLong = address.getLongitude();
 
-        double currRadLat = currLat*(Math.PI/180);
-        double currRadLong = currLong*(Math.PI/180);
-        double targetRadLat = trackingCache.getLat()*(Math.PI/180);
-        double targetRadLong = trackingCache.getLong()*(Math.PI/180);
+        double currRadLat = Math.toRadians(currLat);
+        double currRadLong = Math.toRadians(currLong);
+        double targetRadLat = Math.toRadians(trackingCache.getLat());
+        double targetRadLong = Math.toRadians(trackingCache.getLong());
 
         double dlat = targetRadLat - currRadLat;
         double dlong = targetRadLong - currRadLong;
