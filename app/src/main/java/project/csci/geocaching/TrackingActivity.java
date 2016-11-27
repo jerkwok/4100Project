@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Matrix;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -14,6 +15,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +23,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -39,6 +42,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
     Sensor accelerometer;
     Sensor magnetometer;
     TextView azimuthView;
+    ImageView arrowView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         }
 
         azimuthView = (TextView) findViewById(R.id.azumith_text);
+        arrowView = (ImageView) findViewById(R.id.arrow);
         setupLocationServices();
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -295,6 +300,13 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
                 SensorManager.getOrientation(R, orientation);
                 azimut = ((float)Math.toDegrees(orientation[0])+360)%360;
                 azimuthView.setText(Float.toString( azimut));
+
+//                Matrix matrix = new Matrix();
+//                arrowView.setScaleType(ImageView.ScaleType.MATRIX);
+//
+//                matrix.postRotate(azimut);
+//                arrowView.setImageMatrix(matrix);
+                arrowView.setRotation(azimut);
             }
         }
     }

@@ -57,6 +57,13 @@
         android:id="@+id/current_bearing_text"
         android:layout_gravity="center_horizontal"/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/arrow"
+        android:src="@drawable/arrow"
+        android:layout_gravity="center_horizontal"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -87,4 +94,5 @@
 
         </LinearLayout>
     </RelativeLayout>
+
 </LinearLayout>
