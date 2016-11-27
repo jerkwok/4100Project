@@ -99,12 +99,6 @@ public class MainActivity extends AppCompatActivity {
         }else if ((requestCode == TRACKING_CODE) && (resultCode == RESULT_OK)){
             //cache successfully claimed
 
-//            trackingCache.setCacheID(data.getIntExtra("cacheID", 0));
-//            trackingCache.setName(data.getStringExtra("cacheName"));
-//            trackingCache.setLat(data.getDoubleExtra("cacheLat", 0));
-//            trackingCache.setLong(data.getDoubleExtra("cacheLong", 0));
-//            trackingCache.setDescription(data.getStringExtra("cacheDesc"));
-
             //set new cache value for user
             int newCacheValue = 0;
             String oldCaches = Integer.toBinaryString(database.getUserCaches(getIntent().getStringExtra("username")));
@@ -128,6 +122,12 @@ public class MainActivity extends AppCompatActivity {
                 TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
                 trackingInfo.setText(R.string.claimed_cache);
             }
+
+            trackingCache.setCacheID(data.getIntExtra("cacheID", -1));
+            trackingCache.setName(data.getStringExtra("cacheName"));
+            trackingCache.setLat(data.getDoubleExtra("cacheLat", 0));
+            trackingCache.setLong(data.getDoubleExtra("cacheLong", 0));
+            trackingCache.setDescription(data.getStringExtra("cacheDesc"));
         }
     }
 
