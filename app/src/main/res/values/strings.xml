@@ -18,6 +18,7 @@
     <string name="track_caches">Track Selected Cache</string>
     <string name="tracking_information">You\'re Tracking Cache: \n\n ID: %1$d \n Title: %2$s \n
         Latitude: %3$f \n Longitude: %4$f</string>
+    <string name="claimed_cache">\nYou have successfully claimed a cache!</string>
     <string name="debug">Debug</string>
     <string name="show_tracking">Tracking</string>
     <string name="duplicate_user">Username Already Taken </string>
