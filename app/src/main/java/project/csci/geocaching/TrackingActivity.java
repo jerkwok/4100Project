@@ -43,7 +43,9 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
     Sensor accelerometer;
     Sensor magnetometer;
     TextView azimuthView;
+    TextView bearingText;
     ImageView arrowView;
+    double bearing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         }
 
         arrowView = (ImageView) findViewById(R.id.arrow);
+        bearingText = (TextView) findViewById(R.id.bearing_title);
         setupLocationServices();
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -215,7 +218,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
                     trackingCache.getLong()));
         }
 
-        double bearing = getBearing(currLong, currLat,trackingCache.getLong(),trackingCache.getLat() );
+        bearing = getBearing(currLong, currLat,trackingCache.getLong(),trackingCache.getLat() );
         bearing = (bearing / Math.PI) * 180;
 
         Button claimButton = (Button)findViewById(R.id.claim_button);
@@ -266,12 +269,11 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
                 SensorManager.getOrientation(R, orientation);
                 azimut = ((float)Math.toDegrees(orientation[0])+360)%360;
 
-//                Matrix matrix = new Matrix();
-//                arrowView.setScaleType(ImageView.ScaleType.MATRIX);
-//
-//                matrix.postRotate(azimut);
-//                arrowView.setImageMatrix(matrix);
-                arrowView.setRotation(azimut);
+                if (bearing < azimut){
+                    arrowView.setRotation(Float.valueOf(String.valueOf(bearing-azimut)));
+                }else{
+                    arrowView.setRotation(Float.valueOf(String.valueOf(azimut - bearing)));
+                }
             }
         }
     }
