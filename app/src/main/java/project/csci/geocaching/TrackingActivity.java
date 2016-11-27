@@ -176,32 +176,10 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
 
     private void showLocationName(Location location) {
         Log.d("LocationSample", "showLocationName("+location+")");
-        // perform a reverse geocode to get the address
-        if (Geocoder.isPresent()) {
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-
-            try {
-                // reverse geocode from current GPS position
-                List<Address> results = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-                if (results.size() > 0) {
-                    Address address = results.get(0);
-                    setLocation(address);
-                } else {
-                    Log.d("LocationSample", "No results found while reverse geocoding GPS location");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Log.d("LocationSample", "No geocoder present");
-        }
+        setLocation(location.getLatitude(), location.getLongitude());
     }
 
-    private void setLocation(Address address) {
-
-        double currLat = address.getLatitude();
-        double currLong = address.getLongitude();
+    private void setLocation(double currLat, double currLong) {
 
         double currRadLat = Math.toRadians(currLat);
         double currRadLong = Math.toRadians(currLong);
