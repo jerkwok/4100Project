@@ -249,7 +249,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
 
         Button claimButton = (Button)findViewById(R.id.claim_button);
 
-        if (distance <= 0.01) {
+        if (distance <= 0.5) {
             claimButton.setEnabled(true);
         } else {
             claimButton.setEnabled(false);
@@ -258,12 +258,14 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
 
     public void claimClicked(View view) {
         Intent output = new Intent();
+        output.putExtra("claimed", true);
         setResult(RESULT_OK,output);
         finish();
     }
 
     public void backClicked(View view) {
         Intent output = new Intent();
+        output.putExtra("claimed", false);
         setResult(RESULT_CANCELED,output);
         finish();
     }

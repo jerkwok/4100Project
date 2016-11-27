@@ -117,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
             }
             Log.d("NEW CACHE VALUE", Integer.toString(newCacheValue));
             //write to database
+
+            if (data.getBooleanExtra("claimed",false)) {
+                TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
+                trackingInfo.setText(R.string.claimed_cache);
+            }
         }
     }
 
