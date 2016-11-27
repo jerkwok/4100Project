@@ -254,9 +254,10 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
                 azimut = ((float)Math.toDegrees(orientation[0])+360)%360;
 
                 if (bearing < azimut){
-                    arrowView.setRotation(Float.valueOf(String.valueOf(bearing-azimut)));
+                    arrowView.setRotation(Float.valueOf(String.valueOf(360 - (azimut - bearing))));
                 }else{
-                    arrowView.setRotation(Float.valueOf(String.valueOf(azimut - bearing)));
+
+                    arrowView.setRotation(Float.valueOf(String.valueOf(bearing-azimut)));
                 }
             }
         }
