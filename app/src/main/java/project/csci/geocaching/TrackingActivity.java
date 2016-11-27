@@ -5,18 +5,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.Address;
 import android.location.Criteria;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.media.Image;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -26,10 +22,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 public class TrackingActivity extends AppCompatActivity implements LocationListener, SensorEventListener {
 
@@ -42,7 +34,6 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
     private SensorManager mSensorManager;
     Sensor accelerometer;
     Sensor magnetometer;
-    TextView azimuthView;
     TextView bearingText;
     ImageView arrowView;
     double bearing;
@@ -60,7 +51,6 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         if (getIntent().getBooleanExtra("cacheSelected", false)){
             TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
             trackingInfo.setText(getString(R.string.tracking_information,
-                    trackingCache.getCacheID(),
                     trackingCache.getName(),
                     trackingCache.getLat(),
                     trackingCache.getLong()));
@@ -131,8 +121,6 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
             }
 
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_LOCATION);
-
-            return;
         }
 
     }
@@ -150,10 +138,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
             case PERMISSIONS_REQUEST_ACCESS_LOCATION: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     updateLocation();
-                } else {
-                    // tell the user that the feature will not work
                 }
-                return;
             }
         }
     }
@@ -203,16 +188,15 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         TextView distanceText = (TextView) findViewById(R.id.distance_text);
 
         if (getIntent().getBooleanExtra("cacheSelected", false)) {
-            distanceText.setText(Double.toString(distance) + " km");
+            distanceText.setText(getString(R.string.distance_information,distance));
         }else{
             trackingText.setText(getString(R.string.no_active_cache));
-            distanceText.setText("0 km");
+            distanceText.setText(R.string.no_distance);
         }
 
         if (getIntent().getBooleanExtra("cacheSelected", false)){
             TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
             trackingInfo.setText(getString(R.string.tracking_information,
-                    trackingCache.getCacheID(),
                     trackingCache.getName(),
                     trackingCache.getLat(),
                     trackingCache.getLong()));

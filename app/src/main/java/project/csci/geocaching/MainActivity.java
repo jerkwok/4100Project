@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
 
             TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
             trackingInfo.setText(getString(R.string.tracking_information,
-                    trackingCache.getCacheID(),
                     trackingCache.getName(),
                     trackingCache.getLat(),
                     trackingCache.getLong()));
