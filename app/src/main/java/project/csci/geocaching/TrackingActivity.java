@@ -51,7 +51,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         trackingCache.setLong(getIntent().getDoubleExtra("cacheLong", 0));
         trackingCache.setDescription(getIntent().getStringExtra("cacheDesc"));
         if (getIntent().getBooleanExtra("cacheSelected", false)){
-            TextView trackingInfo = (TextView) findViewById(R.id.tracking_text);
+            TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
             trackingInfo.setText(getString(R.string.tracking_information,
                     trackingCache.getCacheID(),
                     trackingCache.getName(),
@@ -218,16 +218,18 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         double c = 2 * (Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));
         double distance = EARTH_RADIUS * c;
 
+        TextView trackingText = (TextView) findViewById(R.id.tracking_textview);
         TextView distanceText = (TextView) findViewById(R.id.distance_text);
 
         if (getIntent().getBooleanExtra("cacheSelected", false)) {
-            distanceText.setText("Distance to Cache:" + Double.toString(distance));
+            distanceText.setText(Double.toString(distance) + " km");
         }else{
-            distanceText.setText("No Active Tracking Cache");
+            trackingText.setText(getString(R.string.no_active_cache));
+            distanceText.setText("0 km");
         }
 
         if (getIntent().getBooleanExtra("cacheSelected", false)){
-            TextView trackingInfo = (TextView) findViewById(R.id.tracking_text);
+            TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
             trackingInfo.setText(getString(R.string.tracking_information,
                     trackingCache.getCacheID(),
                     trackingCache.getName(),
@@ -239,8 +241,8 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         bearing = (bearing / Math.PI) * 180;
 
 
-        TextView currentBearingInfo = (TextView) findViewById(R.id.current_bearing_text);
-        currentBearingInfo.setText(getString(R.string.device_bearing, bearing));
+        //TextView currentBearingInfo = (TextView) findViewById(R.id.current_bearing_text);
+        //currentBearingInfo.setText(getString(R.string.device_bearing, bearing));
 
         if (getIntent().getBooleanExtra("cacheSelected", false)){
             TextView bearingInfo = (TextView) findViewById(R.id.bearing_text);
@@ -292,7 +294,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
                 float orientation[] = new float[3];
                 SensorManager.getOrientation(R, orientation);
                 azimut = ((float)Math.toDegrees(orientation[0])+360)%360;
-                azimuthView.setText("Device Bearing:" + Float.toString( azimut));
+                azimuthView.setText(Float.toString( azimut));
             }
         }
     }

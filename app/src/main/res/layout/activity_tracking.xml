@@ -13,27 +13,49 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tracking_text"/>
+        android:id="@+id/tracking_textview"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="17dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/distance_text"/>
+        android:id="@+id/distance_title"
+        android:text="@string/distance_title"
+        android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bearing_text"/>
+        android:id="@+id/distance_text"
+        android:layout_gravity="center_horizontal"
+        android:textSize="17dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/azumith_text"/>
+        android:id="@+id/bearing_text"
+        android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/current_bearing_text"/>
+        android:id="@+id/azumith_title"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/device_bearing"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/azumith_text"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/current_bearing_text"
+        android:layout_gravity="center_horizontal"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -65,5 +87,4 @@
 
         </LinearLayout>
     </RelativeLayout>
-
 </LinearLayout>

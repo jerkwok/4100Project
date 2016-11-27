@@ -63,7 +63,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/trackingButton"
-            android:textAlignment="viewEnd"
             android:drawableLeft="@android:drawable/ic_menu_search"
             android:onClick="showTracking"
             android:text="@string/show_tracking"
