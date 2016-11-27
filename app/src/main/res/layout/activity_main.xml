@@ -45,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/showMapButton"
+            android:drawableLeft="@android:drawable/ic_dialog_map"
             android:onClick="showMap"
             android:text="@string/show_map"
             android:layout_above="@+id/showCacheButton"/>
@@ -53,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/showCacheButton"
+            android:drawableLeft="@android:drawable/ic_menu_agenda"
             android:onClick="showCacheList"
             android:text="@string/show_cache_list"
             android:layout_above="@+id/trackingButton"/>
