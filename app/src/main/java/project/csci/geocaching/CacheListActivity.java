@@ -25,7 +25,7 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
 
     ArrayList<Cache> cacheList = new ArrayList<>();
     Cache selected = null;
-    String url = "http://pastebin.com/raw/VBnQkT7Z";
+    String url = "http://pastebin.com/raw/5jCpxuyN";
 //    String url = "http://pastebin.com/raw/Gq23ySAB";
 //    String url = "http://pastebin.com/raw/Shp3WRa4";
     String userCachesBits;
@@ -137,8 +137,8 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
 
         for(int a = 0; a < parent.getChildCount(); a++)
         {
-            if (((a) < userCachesBits.length()) &&
-                    (userCachesBits.substring(userCachesBits.length() - (a) - 1).charAt(0) == '1')
+            if (((a + parent.getFirstVisiblePosition()) < userCachesBits.length()) &&
+                    (userCachesBits.substring(userCachesBits.length() - (a + parent.getFirstVisiblePosition()) - 1).charAt(0) == '1')
                     ){
                 if (a == position){
                     selected = null;

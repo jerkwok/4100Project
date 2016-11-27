@@ -304,6 +304,8 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
 
     public void debugClicked(View view) {
         Intent output = new Intent();
+        output.putExtra("claimed", true);
+        output.putExtra("cacheID", trackingCache.getCacheID());
         setResult(RESULT_OK,output);
         finish();
     }
