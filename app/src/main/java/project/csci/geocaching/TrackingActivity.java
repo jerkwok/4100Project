@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -92,11 +93,6 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         mSensorManager.unregisterListener(this);
     }
 
-    /*
-           Sample data:
-             CN Tower:      43.6426, -79.3871
-             Eiffel Tower:  48.8582,   2.2945
-         */
     @SuppressLint("NewApi")
     private void updateLocation() {
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -245,21 +241,22 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         double bearing = getBearing(currLong, currLat,trackingCache.getLong(),trackingCache.getLat() );
         bearing = (bearing / Math.PI) * 180;
 
-
-        //TextView currentBearingInfo = (TextView) findViewById(R.id.current_bearing_text);
-        //currentBearingInfo.setText(getString(R.string.device_bearing, bearing));
+        TextView bearingInfo = (TextView) findViewById(R.id.bearing_text);
 
         if (getIntent().getBooleanExtra("cacheSelected", false)){
-            TextView bearingInfo = (TextView) findViewById(R.id.bearing_text);
-            bearingInfo.setText(getString(R.string.bearing_information, bearing - azimut));
+            bearingInfo.setText(Double.toString(bearing - azimut));
+        } else {
+            bearingInfo.setText("N/A");
         }
 
         Button claimButton = (Button)findViewById(R.id.claim_button);
 
         if (distance <= 0.5) {
             claimButton.setEnabled(true);
+            distanceText.setTextColor(Color.GREEN);
         } else {
             claimButton.setEnabled(false);
+            distanceText.setTextColor(Color.GRAY);
         }
     }
 
@@ -314,13 +311,5 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
-    }
-
-    public void debugClicked(View view) {
-        Intent output = new Intent();
-        output.putExtra("claimed", true);
-        output.putExtra("cacheID", trackingCache.getCacheID());
-        setResult(RESULT_OK,output);
-        finish();
     }
 }

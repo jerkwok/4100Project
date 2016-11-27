@@ -23,39 +23,51 @@
         android:layout_height="wrap_content"
         android:id="@+id/distance_title"
         android:text="@string/distance_title"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:textSize="17dp"
+        android:layout_marginTop="30dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/distance_text"
         android:layout_gravity="center_horizontal"
-        android:textSize="17dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bearing_text"
-        android:layout_gravity="center_horizontal"/>
+        android:textSize="25dp"
+        android:layout_marginTop="5dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/azumith_title"
         android:layout_gravity="center_horizontal"
-        android:text="@string/device_bearing"/>
+        android:text="@string/device_bearing"
+        android:textSize="17dp"
+        android:layout_marginTop="20dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/azumith_text"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:textSize="25dp"
+        android:layout_marginTop="5dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/current_bearing_text"
-        android:layout_gravity="center_horizontal"/>
+        android:id="@+id/bearing_title"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/to_cache"
+        android:textSize="17dp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bearing_text"
+        android:layout_gravity="center_horizontal"
+        android:textSize="25dp"
+        android:layout_marginTop="5dp"/>
 
     <ImageView
         android:layout_width="wrap_content"
