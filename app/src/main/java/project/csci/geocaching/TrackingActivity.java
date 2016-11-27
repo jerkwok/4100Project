@@ -64,7 +64,6 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
                     trackingCache.getLong()));
         }
 
-        azimuthView = (TextView) findViewById(R.id.azumith_text);
         arrowView = (ImageView) findViewById(R.id.arrow);
         setupLocationServices();
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
@@ -241,14 +240,6 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         double bearing = getBearing(currLong, currLat,trackingCache.getLong(),trackingCache.getLat() );
         bearing = (bearing / Math.PI) * 180;
 
-        TextView bearingInfo = (TextView) findViewById(R.id.bearing_text);
-
-        if (getIntent().getBooleanExtra("cacheSelected", false)){
-            bearingInfo.setText(Double.toString(bearing - azimut));
-        } else {
-            bearingInfo.setText("N/A");
-        }
-
         Button claimButton = (Button)findViewById(R.id.claim_button);
 
         if (distance <= 0.5) {
@@ -296,7 +287,6 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
                 float orientation[] = new float[3];
                 SensorManager.getOrientation(R, orientation);
                 azimut = ((float)Math.toDegrees(orientation[0])+360)%360;
-                azimuthView.setText(Float.toString( azimut));
 
 //                Matrix matrix = new Matrix();
 //                arrowView.setScaleType(ImageView.ScaleType.MATRIX);
