@@ -48,7 +48,6 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
                 //split line into sections
                 String[] tokens = csvLines.get(i).split(",");
 
-                //add to the list of housing projects a new housing project using only the data we want.
                 cacheList.add(new Cache(
                         Integer.valueOf(tokens[0]), tokens[1],
                         tokens[2], Double.valueOf(tokens[3]), Double.valueOf(tokens[4])));
@@ -110,7 +109,6 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         listview.setAdapter(cacheAdapter);
         listview.setOnItemClickListener(CacheListActivity.this);
 
-
     }
 
 
@@ -119,7 +117,9 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         Log.d("CLICKED", cacheList.get(position).toString());
         Log.d("USER CACHES", userCachesBits);
         Log.d("POSITION", Integer.toString(position));
+        Log.d("CHILDREN", Integer.toString(parent.getChildCount()));
 //        Log.d("SUBSTRING", userCachesBits.substring(userCachesBits.length() - position - 1));
+        Log.d("VISIBLE", Integer.toString(parent.getFirstVisiblePosition()));
         ImageView statusImage;
         for(int a = 0; a < parent.getChildCount(); a++)
         {
@@ -129,7 +129,7 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         }
 
 //        view.setBackgroundColor(Color.GREEN);
-        statusImage = (ImageView) parent.getChildAt(position).findViewById(R.id.status_image);
+        statusImage = (ImageView) parent.getChildAt(position - parent.getFirstVisiblePosition()).findViewById(R.id.status_image);
 
         statusImage.setImageResource(R.drawable.magnifying);
 
@@ -137,12 +137,13 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
 
         for(int a = 0; a < parent.getChildCount(); a++)
         {
-            if ((a < userCachesBits.length()) &&
-                    (userCachesBits.substring(userCachesBits.length() - a - 1).charAt(0) == '1')
+            if (((a) < userCachesBits.length()) &&
+                    (userCachesBits.substring(userCachesBits.length() - (a) - 1).charAt(0) == '1')
                     ){
                 if (a == position){
                     selected = null;
                 }
+                Log.d("a", Integer.toString(a));
                 statusImage = (ImageView) parent.getChildAt(a).findViewById(R.id.status_image);
 //                parent.getChildAt(a).setBackgroundColor(Color.BLUE);
                 statusImage.setImageResource(R.drawable.star);

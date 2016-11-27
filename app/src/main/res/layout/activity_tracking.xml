@@ -48,4 +48,11 @@
         android:id="@+id/back_button"
         android:text="@string/back"
         android:onClick="backClicked"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/debug_button"
+        android:text="@string/debug"
+        android:onClick="debugClicked"/>
 </LinearLayout>

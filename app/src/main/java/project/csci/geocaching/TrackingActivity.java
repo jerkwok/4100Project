@@ -299,4 +299,10 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
+    public void debugClicked(View view) {
+        Intent output = new Intent();
+        setResult(RESULT_OK,output);
+        finish();
+    }
 }
