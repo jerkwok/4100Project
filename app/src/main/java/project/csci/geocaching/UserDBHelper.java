@@ -39,23 +39,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
         values.put("password", hashedPass);
         values.put("caches", 0);
         db.insert("Users", null, values);
-
     }
-
-    public User getUser(int userId){
-        User returnUser = null;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT  * FROM " + TABLE_NAME + " WHERE userId = ?",
-                new String[]{Integer.toString(userId)});
-
-        if (cursor.moveToFirst()){
-            returnUser = new User(cursor.getInt(0), cursor.getString(1), cursor.getString(3));
-        }
-
-        cursor.close();
-        return returnUser;
-    }
-
 
     public boolean validatePass(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();

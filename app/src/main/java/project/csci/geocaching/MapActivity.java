@@ -35,7 +35,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -136,7 +135,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             return;
         }
-
     }
 
     @Override
@@ -211,7 +209,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 @Override
                 public View getInfoContents(Marker marker) {
 
-                    Context context = getApplicationContext(); //or getActivity(), YourActivity.this, etc.
+                    Context context = getApplicationContext();
 
                     LinearLayout info = new LinearLayout(context);
                     info.setOrientation(LinearLayout.VERTICAL);

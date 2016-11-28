@@ -29,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
         passwordConfirmText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
     }
 
-    public void sendCancelMessage(View view){
+    public void sendCancelMessage(View view) {
         setResult(RESULT_CANCELED);
         finish();
     }
@@ -37,25 +37,25 @@ public class RegisterActivity extends AppCompatActivity {
     public void sendRegisterMessage(View view) {
         if (validatePasswords()) {
             Log.d("Password:", "TRUE");
-        }else {
+        } else {
             Log.d("Password:", "FALSE");
         }
 
         if (!(database.checkUserDupes(usernameText.getText().toString()))) {
             Log.d("Dupe:", "TRUE");
-        }else {
+        } else {
             Log.d("Dupe:", "FALSE");
         }
 
-        if (validatePasswords() && !(database.checkUserDupes(usernameText.getText().toString())) ){
+        if (validatePasswords() && !(database.checkUserDupes(usernameText.getText().toString())) ) {
             database.addEntry(usernameText.getText().toString(), passwordText.getText().toString());
             Intent output = new Intent();
             output.putExtra("username",usernameText.getText().toString() );
             setResult(RESULT_OK,output);
             finish();
-        }else if (database.checkUserDupes(usernameText.getText().toString())) {
+        } else if (database.checkUserDupes(usernameText.getText().toString())) {
             Toast.makeText(this, getString(R.string.duplicate_user), Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             //display toast, passwords don't match
             Toast.makeText(this, getString(R.string.password_dont_match), Toast.LENGTH_SHORT).show();
         }

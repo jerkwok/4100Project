@@ -10,6 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="project.csci.geocaching.TrackingActivity">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,8 +83,6 @@
                 android:textAlignment="gravity"
                 android:gravity="center"
                 android:layout_weight="1"/>
-
         </LinearLayout>
     </RelativeLayout>
-
 </LinearLayout>
