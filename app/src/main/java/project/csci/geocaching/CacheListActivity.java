@@ -1,7 +1,6 @@
 package project.csci.geocaching;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,9 +25,8 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
     ArrayList<Cache> cacheList = new ArrayList<>();
     Cache selected = null;
     String url = "http://pastebin.com/raw/5jCpxuyN";
-//    String url = "http://pastebin.com/raw/Gq23ySAB";
-//    String url = "http://pastebin.com/raw/Shp3WRa4";
     String userCachesBits;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +41,7 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         try{
             InputStream URLstream = OpenHttpConnection(url);
             List<String> csvLines = loadCSVLines(URLstream);
+
             for (int i = 0; i < csvLines.size(); i++){
                 //parse csv
                 //split line into sections
@@ -64,14 +63,10 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         }
     }
 
-    public void backButtonClicked(View view){
-
-        finish();
-    }
+    public void backButtonClicked(View view) { finish(); }
 
     private List<String> loadCSVLines(InputStream inStream) throws IOException {
         ArrayList<String> lines = new ArrayList<>();
-
         BufferedReader in = new BufferedReader(new InputStreamReader(inStream));
 
         String line;
@@ -90,6 +85,7 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         HttpURLConnection httpConn = (HttpURLConnection) conn;
         httpConn.setRequestMethod("GET");
         httpConn.connect();
+
         if (httpConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
             inputStream = httpConn.getInputStream();
         }
@@ -98,19 +94,12 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
 
     private void refreshDisplay() {
         ListView listview = (ListView) findViewById(R.id.cache_list);
-//        ArrayAdapter<Cache> arrayAdapter = new ArrayAdapter<>(
-//                this,
-//                android.R.layout.simple_list_item_1,
-//                cacheList);
-
         CacheListAdapter cacheAdapter = new CacheListAdapter(this,android.R.layout.simple_list_item_1,
                 cacheList, userCachesBits);
 
         listview.setAdapter(cacheAdapter);
         listview.setOnItemClickListener(CacheListActivity.this);
-
     }
-
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -118,21 +107,17 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         Log.d("USER CACHES", userCachesBits);
         Log.d("POSITION", Integer.toString(position));
         Log.d("CHILDREN", Integer.toString(parent.getChildCount()));
-//        Log.d("SUBSTRING", userCachesBits.substring(userCachesBits.length() - position - 1));
         Log.d("VISIBLE", Integer.toString(parent.getFirstVisiblePosition()));
+
         ImageView statusImage;
-        for(int a = 0; a < parent.getChildCount(); a++)
-        {
+
+        for(int a = 0; a < parent.getChildCount(); a++) {
             statusImage = (ImageView) parent.getChildAt(a).findViewById(R.id.status_image);
             statusImage.setImageResource(0);
-//            parent.getChildAt(a).setBackgroundColor(Color.TRANSPARENT);
         }
 
-//        view.setBackgroundColor(Color.GREEN);
         statusImage = (ImageView) parent.getChildAt(position - parent.getFirstVisiblePosition()).findViewById(R.id.status_image);
-
         statusImage.setImageResource(R.drawable.magnifying);
-
         selected = cacheList.get(position);
 
         for(int a = 0; a < parent.getChildCount(); a++)
@@ -145,15 +130,14 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
                 }
                 Log.d("a", Integer.toString(a));
                 statusImage = (ImageView) parent.getChildAt(a).findViewById(R.id.status_image);
-//                parent.getChildAt(a).setBackgroundColor(Color.BLUE);
                 statusImage.setImageResource(R.drawable.star);
             }
         }
-
     }
 
     public void trackClicked(View view) {
         Intent output = new Intent();
+
         if (selected != null){
             output.putExtra("cacheID", selected.getCacheID());
             output.putExtra("cacheName", selected.getName());

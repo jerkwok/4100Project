@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int MAIN_CODE = 1;
     private static final int CACHE_LIST_CODE = 2;
     private static final int TRACKING_CODE = 3;
+
     private Cache trackingCache = new Cache();
     int userCaches;
     String username;
@@ -42,8 +43,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         username = getIntent().getStringExtra("username");
         userCaches = getIntent().getIntExtra("userCaches", 0);
+
         TextView usernameText = (TextView) findViewById(R.id.username_textview);
         usernameText.setText(getString(R.string.welcome_message1,username));
         TextView welcomeText = (TextView) findViewById(R.id.welcome_textview);
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void showMap(View view){
         Intent i = new Intent(this, MapActivity.class);
+
         if (trackingCache.getCacheID() != -1){
             i.putExtra("cacheSelected", true);
             i.putExtra("cacheID", trackingCache.getCacheID());
@@ -70,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             i.putExtra("cacheSelected", false);
         }
+
         i.putExtra("userCaches", userCaches);
         i.putExtra("username", getIntent().getStringExtra("username"));
         this.startActivity(i);
@@ -82,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("USERNAME", username);
-        if( (requestCode == CACHE_LIST_CODE) && (resultCode == RESULT_OK)){
+
+        if ((requestCode == CACHE_LIST_CODE) && (resultCode == RESULT_OK)) {
             //save the tracked cache to a file
             trackingCache.setCacheID(data.getIntExtra("cacheID", 0));
             trackingCache.setName(data.getStringExtra("cacheName"));
@@ -96,14 +102,14 @@ public class MainActivity extends AppCompatActivity {
                     trackingCache.getLat(),
                     trackingCache.getLong()));
 
-        }else if ((requestCode == TRACKING_CODE) && (resultCode == RESULT_OK)){
+        } else if ((requestCode == TRACKING_CODE) && (resultCode == RESULT_OK)) {
             //cache successfully claimed
-
             //set new cache value for user
             int newCacheValue = 0;
             String oldCaches = Integer.toBinaryString(database.getUserCaches(getIntent().getStringExtra("username")));
             Log.d("OLD CACHES", oldCaches);
             Log.d("CACHE ID", Integer.toString(trackingCache.getCacheID()));
+
             if ((trackingCache.getCacheID() >= oldCaches.length()) ||
                     (oldCaches.substring(oldCaches.length() - trackingCache.getCacheID() - 1).charAt(0) == '0')
                     ){
@@ -133,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void showTracking(View view) {
         Intent i = new Intent(this, TrackingActivity.class);
+
         if (trackingCache.getCacheID() != -1){
             i.putExtra("cacheSelected", true);
             i.putExtra("cacheID", trackingCache.getCacheID());
@@ -142,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             i.putExtra("cacheSelected", false);
         }
+        
         i.putExtra("userCaches", userCaches);
         i.putExtra("username", getIntent().getStringExtra("username"));
         this.startActivityForResult(i, TRACKING_CODE);

@@ -10,10 +10,6 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 
-/**
- * Created by jeremy on 25/11/16.
- */
-
 public class CanvasView extends View {
 
     public static final int SPRITE_WIDTH = 80;
@@ -31,7 +27,6 @@ public class CanvasView extends View {
         @Override
         public void run() {
             // delay (calculate based on FPS)
-
             invalidate();
         }
     };
@@ -74,7 +69,6 @@ public class CanvasView extends View {
 
         // schedule the next frame draw
         handler.postDelayed(animationThread, SPEED);
-
     }
 
     private void nextFrame() {

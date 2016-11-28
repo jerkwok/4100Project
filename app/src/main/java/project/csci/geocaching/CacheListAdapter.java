@@ -10,9 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import java.util.List;
-
 
 public class CacheListAdapter extends ArrayAdapter<Cache> {
 
@@ -30,11 +28,9 @@ public class CacheListAdapter extends ArrayAdapter<Cache> {
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-//        return super.getView(position, convertView, parent);
+
         if (convertView == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-//            View rowView = inflater.inflate(R.layout.cache_row, parent, false);
             convertView = inflater.inflate(R.layout.cache_row, parent, false);
         }
 
@@ -42,18 +38,16 @@ public class CacheListAdapter extends ArrayAdapter<Cache> {
         TextView cacheLoc = (TextView) convertView.findViewById(R.id.row_cache_loc);
         TextView cacheDesc = (TextView) convertView.findViewById(R.id.row_cache_desc);
         ImageView statusImage = (ImageView) convertView.findViewById(R.id.status_image);
-//        cacheText.setText(cachesList.get(position).getInfo());
+
         cacheText.setText(cachesList.get(position).getName());
         cacheLoc.setText(cachesList.get(position).getLoc());
         cacheDesc.setText(cachesList.get(position).getDescription());
-
 
         Log.d("ADAPTER CACHES", caches);
 
         if ((position < caches.length()) &&
                 (caches.substring(caches.length() - position - 1).charAt(0) == '1')
-                ){
-//            rowView.setBackgroundColor(Color.BLUE);
+                ) {
             statusImage.setImageResource(R.drawable.star);
 
         }

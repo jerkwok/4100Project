@@ -48,6 +48,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         trackingCache.setLat(getIntent().getDoubleExtra("cacheLat", 0));
         trackingCache.setLong(getIntent().getDoubleExtra("cacheLong", 0));
         trackingCache.setDescription(getIntent().getStringExtra("cacheDesc"));
+
         if (getIntent().getBooleanExtra("cacheSelected", false)){
             TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
             trackingInfo.setText(getString(R.string.tracking_information,

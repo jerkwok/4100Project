@@ -7,7 +7,6 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
@@ -15,6 +14,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int REGISTER_CODE = 0;
     private UserDBHelper database;
     EditText passwordText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         database = new UserDBHelper(this);
@@ -23,10 +23,6 @@ public class LoginActivity extends AppCompatActivity {
         passwordText = (EditText) findViewById(R.id.password_entry);
 
         passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
-//        CanvasView globeCanvas = (CanvasView) findViewById(R.id.globe_canvas);
-//        Integer dim = (int) (80 / (getResources().getDisplayMetrics().xdpi / 160));
-//        globeCanvas.setLayoutParams(new LinearLayout.LayoutParams( dim, dim));
     }
 
     @Override
@@ -36,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordText.setText("");
     }
 
-    public void sendLoginMessage(View view){
+    public void sendLoginMessage(View view) {
         EditText usernameEditText = (EditText) findViewById(R.id.username_entry);
         EditText passwordEditText = (EditText) findViewById(R.id.password_entry);
 
@@ -52,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void sendRegisterMessage(View view){
+    public void sendRegisterMessage(View view) {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivityForResult(intent, REGISTER_CODE);
     }
