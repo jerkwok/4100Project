@@ -38,7 +38,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/distance_text"
         android:layout_gravity="center_horizontal"
-        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textSize="35dp"
         android:layout_marginTop="5dp"/>
 
     <TextView
