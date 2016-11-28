@@ -207,12 +207,17 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
 
         Button claimButton = (Button)findViewById(R.id.claim_button);
 
+        if (distance <= 100){
+            distanceText.setTextColor(Color.rgb(0,(int) (((100 - distance) / 100) * 255),0));
+        }else{
+            distanceText.setTextColor(Color.GRAY);
+        }
+
         if (distance <= 0.5) {
             claimButton.setEnabled(true);
-            distanceText.setTextColor(Color.GREEN);
+            distanceText.setTextColor(Color.rgb(0,255,0));
         } else {
             claimButton.setEnabled(false);
-            distanceText.setTextColor(Color.GRAY);
         }
     }
 
