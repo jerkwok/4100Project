@@ -51,7 +51,10 @@ public class RegisterActivity extends AppCompatActivity {
             Log.d("Dupe:", "FALSE");
         }
 
-        if (validatePasswords() && !(database.checkUserDupes(usernameText.getText().toString())) ) {
+        if(usernameText.getText().toString().compareTo("") == 0 || passwordText.getText().toString().compareTo("") == 0 ||
+                passwordConfirmText.getText().toString().compareTo("") == 0){
+            Toast.makeText(this, getString(R.string.no_empty_text), Toast.LENGTH_SHORT).show();
+        }else if (validatePasswords() && !(database.checkUserDupes(usernameText.getText().toString())) ) {
             database.addEntry(usernameText.getText().toString(), passwordText.getText().toString());
             Intent output = new Intent();
             output.putExtra("username",usernameText.getText().toString() );

@@ -33,4 +33,5 @@
     <string name="title">GeoCaching</string>
     <string name="login_fail">Login Unsuccessful</string>
     <string name="no_distance">0 km</string>
+    <string name="no_empty_text">Fields Cannot Be Empty</string>
 </resources>

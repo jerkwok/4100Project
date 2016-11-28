@@ -42,7 +42,9 @@ public class LoginActivity extends AppCompatActivity {
         EditText usernameEditText = (EditText) findViewById(R.id.username_entry);
         EditText passwordEditText = (EditText) findViewById(R.id.password_entry);
 
-        if(database.validatePass(usernameEditText.getText().toString(), passwordEditText.getText().toString())){
+        if(database.validatePass(usernameEditText.getText().toString(), passwordEditText.getText().toString()) &&
+                usernameEditText.getText().toString() != "" &&
+                passwordEditText.getText().toString() != ""){
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("username", usernameEditText.getText().toString());
             intent.putExtra("userCaches", database.getUserCaches(usernameEditText.getText().toString()));
