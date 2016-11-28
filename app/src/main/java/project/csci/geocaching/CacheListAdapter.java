@@ -17,12 +17,18 @@ public class CacheListAdapter extends ArrayAdapter<Cache> {
     private Context context;
     private String caches;
     private List<Cache> cachesList;
+    private int selected;
 
-    public CacheListAdapter(Context context, int resource, List<Cache> objects, String caches) {
+    public void setSelected(int selected) {
+        this.selected = selected;
+    }
+
+    public CacheListAdapter(Context context, int resource, List<Cache> objects, String caches, int selected) {
         super(context, resource, objects);
         this.context = context;
         this.caches = caches;
         cachesList = objects;
+        this.selected = selected;
     }
 
     @NonNull
@@ -43,13 +49,19 @@ public class CacheListAdapter extends ArrayAdapter<Cache> {
         cacheLoc.setText(cachesList.get(position).getLoc());
         cacheDesc.setText(cachesList.get(position).getDescription());
 
-        Log.d("ADAPTER CACHES", caches);
+//        Log.d("ADAPTER CACHES", caches);
+        Log.d("Child", Integer.toString(position));
+        Log.d("Caches", caches);
 
         if ((position < caches.length()) &&
                 (caches.substring(caches.length() - position - 1).charAt(0) == '1')
                 ) {
+            Log.d("Substring", Character.toString(caches.substring(caches.length() - position - 1).charAt(0)));
             statusImage.setImageResource(R.drawable.star);
-
+        }else if(position == selected){
+            statusImage.setImageResource(R.drawable.magnifying);
+        }else{
+            statusImage.setImageResource(0);
         }
         return convertView;
     }

@@ -26,6 +26,7 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
     Cache selected = null;
     String url = "http://pastebin.com/raw/5jCpxuyN";
     String userCachesBits;
+    CacheListAdapter cacheAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +95,8 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
 
     private void refreshDisplay() {
         ListView listview = (ListView) findViewById(R.id.cache_list);
-        CacheListAdapter cacheAdapter = new CacheListAdapter(this,android.R.layout.simple_list_item_1,
-                cacheList, userCachesBits);
+        cacheAdapter = new CacheListAdapter(this,android.R.layout.simple_list_item_1,
+                cacheList, userCachesBits, -1);
 
         listview.setAdapter(cacheAdapter);
         listview.setOnItemClickListener(CacheListActivity.this);
@@ -119,6 +120,7 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         statusImage = (ImageView) parent.getChildAt(position - parent.getFirstVisiblePosition()).findViewById(R.id.status_image);
         statusImage.setImageResource(R.drawable.magnifying);
         selected = cacheList.get(position);
+        cacheAdapter.setSelected(position);
 
         for(int a = 0; a < parent.getChildCount(); a++)
         {
