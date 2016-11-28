@@ -18,7 +18,7 @@ public class CanvasView extends View {
     public static final int TOTAL_WIDTH = 1280;
     public static final int TOTAL_HEIGHT = 320;
 
-    public static final int SPEED = 80;
+    public static final int SPEED = 100;
 
     private Bitmap spriteSheetBitmap;
 
@@ -58,8 +58,6 @@ public class CanvasView extends View {
 
         // fill the background grey
         canvas.drawRGB(200, 200, 200);
-
-        // TODO:  Draw some text
 
         // draw the current frame
         drawFrame(canvas);

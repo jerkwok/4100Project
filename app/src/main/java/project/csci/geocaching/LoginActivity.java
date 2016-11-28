@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,6 +28,13 @@ public class LoginActivity extends AppCompatActivity {
         ButtonHelper buttonHelper = new ButtonHelper();
         buttonHelper.buttonClickSetter(this, findViewById(R.id.loginButton));
         buttonHelper.buttonClickSetter(this, findViewById(R.id.registerButton));
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int densityDpi = (int)(metrics.density * 160f);
+        int denser = (int)(160 / getResources().getDisplayMetrics().density);
+        Log.d("DPI", Integer.toString(densityDpi));
+        Log.d("Calc Size", Integer.toString(denser));
+
     }
 
     @Override
@@ -43,8 +49,8 @@ public class LoginActivity extends AppCompatActivity {
         EditText passwordEditText = (EditText) findViewById(R.id.password_entry);
 
         if(database.validatePass(usernameEditText.getText().toString(), passwordEditText.getText().toString()) &&
-                usernameEditText.getText().toString() != "" &&
-                passwordEditText.getText().toString() != ""){
+                usernameEditText.getText().toString().compareTo("") != 0 &&
+                passwordEditText.getText().toString().compareTo("") != 0){
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("username", usernameEditText.getText().toString());
             intent.putExtra("userCaches", database.getUserCaches(usernameEditText.getText().toString()));
