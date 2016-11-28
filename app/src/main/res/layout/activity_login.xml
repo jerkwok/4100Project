@@ -40,7 +40,7 @@
             android:id="@+id/username_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="1"
+            android:maxLines="1"
             android:hint="@string/username"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -54,7 +54,7 @@
             android:id="@+id/password_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="1"
+            android:maxLines="1"
             android:hint="@string/password"/>
     </android.support.design.widget.TextInputLayout>
 
