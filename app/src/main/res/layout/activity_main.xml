@@ -47,9 +47,9 @@
         android:layout_height="match_parent">
 
         <Button
+            android:id="@+id/showMapButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/showMapButton"
             android:drawableLeft="@android:drawable/ic_dialog_map"
             android:onClick="showMap"
             android:text="@string/show_map"
@@ -57,12 +57,12 @@
             android:layout_marginBottom="5dp"
             android:paddingLeft="20dp"
             android:textColor="@color/white"
-            android:background="@drawable/round_button"/>
+            android:background="@drawable/round_button_up"/>
 
         <Button
+            android:id="@+id/showCacheButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/showCacheButton"
             android:drawableLeft="@android:drawable/ic_menu_agenda"
             android:onClick="showCacheList"
             android:text="@string/show_cache_list"
@@ -70,29 +70,29 @@
             android:layout_marginBottom="5dp"
             android:paddingLeft="20dp"
             android:textColor="@color/white"
-            android:background="@drawable/round_button"/>
+            android:background="@drawable/round_button_up"/>
 
         <Button
+            android:id="@+id/trackingButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/trackingButton"
             android:drawableLeft="@android:drawable/ic_menu_search"
             android:onClick="showTracking"
             android:text="@string/show_tracking"
             android:paddingLeft="20dp"
             android:layout_above="@+id/logoutButton"
             android:textColor="@color/white"
-            android:background="@drawable/round_button"/>
+            android:background="@drawable/round_button_up"/>
 
         <Button
+            android:id="@+id/logoutButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/logoutButton"
             android:text="@string/logout"
             android:onClick="sendLogoutMessage"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="40dp"
             android:textColor="@color/white"
-            android:background="@drawable/round_button"/>
+            android:background="@drawable/round_button_up"/>
     </RelativeLayout>
 </LinearLayout>

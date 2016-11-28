@@ -71,21 +71,21 @@
             android:layout_alignParentBottom="true">
 
             <Button
+                android:id="@+id/claim_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/claim_button"
                 android:text="@string/claim"
                 android:onClick="claimClicked"
                 android:textAlignment="gravity"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:textColor="@color/white"
-                android:background="@drawable/round_button"/>
+                android:background="@drawable/round_button_up"/>
 
             <Button
+                android:id="@+id/back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/back_button"
                 android:text="@string/back"
                 android:onClick="backClicked"
                 android:textAlignment="gravity"
@@ -93,7 +93,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="3dp"
                 android:textColor="@color/white"
-                android:background="@drawable/round_button"/>
+                android:background="@drawable/round_button_up"/>
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

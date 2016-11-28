@@ -37,7 +37,7 @@
             android:gravity="center"
             android:layout_weight="1"
             android:textColor="@color/white"
-            android:background="@drawable/round_button"/>
+            android:background="@drawable/round_button_up"/>
 
         <Button
             android:id="@+id/cache_list_back_button"
@@ -50,6 +50,6 @@
             android:layout_weight="1"
             android:layout_marginLeft="3dp"
             android:textColor="@color/white"
-            android:background="@drawable/round_button"/>
+            android:background="@drawable/round_button_up"/>
     </LinearLayout>
 </LinearLayout>

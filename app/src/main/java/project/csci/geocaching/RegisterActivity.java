@@ -27,6 +27,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         passwordConfirmText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+        ButtonHelper buttonHelper = new ButtonHelper();
+        buttonHelper.buttonClickSetter(this, findViewById(R.id.reg_registerButton));
+        buttonHelper.buttonClickSetter(this, findViewById(R.id.reg_cancelButton));
     }
 
     public void sendCancelMessage(View view) {

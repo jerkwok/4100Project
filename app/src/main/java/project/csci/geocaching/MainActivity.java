@@ -53,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
         welcomeText.setText(getString(R.string.welcome_message2));
         TextView trackingText = (TextView) findViewById(R.id.tracking_textview);
         trackingText.setText(getString(R.string.no_active_cache));
+
+        ButtonHelper buttonHelper = new ButtonHelper();
+        buttonHelper.buttonClickSetter(this, findViewById(R.id.showMapButton));
+        buttonHelper.buttonClickSetter(this, findViewById(R.id.showCacheButton));
+        buttonHelper.buttonClickSetter(this, findViewById(R.id.trackingButton));
+        buttonHelper.buttonClickSetter(this, findViewById(R.id.logoutButton));
     }
 
     public void showCacheList(View view){

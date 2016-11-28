@@ -39,6 +39,10 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         userCachesBits = Integer.toBinaryString(getIntent().getIntExtra("userCaches", 0));
         Log.d("BITS", userCachesBits);
 
+        ButtonHelper buttonHelper = new ButtonHelper();
+        buttonHelper.buttonClickSetter(this, findViewById(R.id.track_cache_button));
+        buttonHelper.buttonClickSetter(this, findViewById(R.id.cache_list_back_button));
+
         try{
             InputStream URLstream = OpenHttpConnection(url);
             List<String> csvLines = loadCSVLines(URLstream);

@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -23,6 +25,10 @@ public class LoginActivity extends AppCompatActivity {
 
         passwordText = (EditText) findViewById(R.id.password_entry);
         passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+        ButtonHelper buttonHelper = new ButtonHelper();
+        buttonHelper.buttonClickSetter(this, findViewById(R.id.loginButton));
+        buttonHelper.buttonClickSetter(this, findViewById(R.id.registerButton));
     }
 
     @Override

@@ -20,7 +20,7 @@
     <string name="tracking_information">You\'re Tracking Cache: \n\n Title: %1$s \n
         Latitude: %2$.4f \n Longitude: %3$.4f</string>
     <string name="distance_information">%1$.4f km</string>
-    <string name="claimed_cache">\nYou have successfully claimed a cache!</string>
+    <string name="claimed_cache">\n\nYou have successfully claimed a cache!\n\n</string>
     <string name="no_active_cache">\n\nNo Active Tracking Cache\n\n</string>
     <string name="distance_title">Distance to Cache:</string>
     <string name="device_bearing">Device Bearing:</string>

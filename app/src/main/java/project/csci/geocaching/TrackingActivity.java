@@ -64,6 +64,9 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
+        ButtonHelper buttonHelper = new ButtonHelper();
+        buttonHelper.buttonClickSetter(this, findViewById(R.id.claim_button));
+        buttonHelper.buttonClickSetter(this, findViewById(R.id.back_button));
     }
     private void setupLocationServices() {
         requestLocationPermissions();
@@ -214,8 +217,12 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         }
 
         if (distance <= 0.5) {
+            ButtonHelper buttonHelper = new ButtonHelper();
+            buttonHelper.buttonClickSetter(this, findViewById(R.id.claim_button));
+            claimButton.setBackground(getResources().getDrawable(R.drawable.round_button_up,null));
             claimButton.setEnabled(true);
         } else {
+            claimButton.setBackground(getResources().getDrawable(R.drawable.round_button_disabled,null));
             claimButton.setEnabled(false);
         }
     }

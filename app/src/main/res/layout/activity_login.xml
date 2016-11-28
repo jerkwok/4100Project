@@ -67,13 +67,14 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="5dp"
         android:textColor="@color/white"
-        android:background="@drawable/round_button"/>
+        android:background="@drawable/round_button_up"/>
 
     <Button
+        android:id="@+id/registerButton"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/register_button"
         android:onClick="sendRegisterMessage"
         android:textColor="@color/white"
-        android:background="@drawable/round_button"/>
+        android:background="@drawable/round_button_up"/>
 </LinearLayout>
