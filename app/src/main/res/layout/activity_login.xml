@@ -42,7 +42,6 @@
             android:layout_height="wrap_content"
             android:lines="1"
             android:hint="@string/username"/>
-
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -57,10 +56,10 @@
             android:layout_height="wrap_content"
             android:lines="1"
             android:hint="@string/password"/>
-
     </android.support.design.widget.TextInputLayout>
 
     <Button
+        android:id="@+id/loginButton"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/login_button"

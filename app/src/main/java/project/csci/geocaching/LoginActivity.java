@@ -20,8 +20,8 @@ public class LoginActivity extends AppCompatActivity {
         database = new UserDBHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        passwordText = (EditText) findViewById(R.id.password_entry);
 
+        passwordText = (EditText) findViewById(R.id.password_entry);
         passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
     }
 
