@@ -195,8 +195,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         }
 
         if (getIntent().getBooleanExtra("cacheSelected", false)){
-            TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
-            trackingInfo.setText(getString(R.string.tracking_information,
+            trackingText.setText(getString(R.string.tracking_information,
                     trackingCache.getName(),
                     trackingCache.getLat(),
                     trackingCache.getLong()));
