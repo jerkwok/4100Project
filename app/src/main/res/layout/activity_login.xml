@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/backgroundColor"
 
     tools:context="project.csci.geocaching.LoginActivity">
 
@@ -17,19 +18,24 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/title"
-        android:textSize="25dp"
+        android:textSize="30dp"
         android:textStyle="bold"
+        android:layout_marginTop="30dp"
         android:paddingBottom="10dp"/>
 
     <project.csci.geocaching.CanvasView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:id="@+id/globe_canvas"
         android:layout_gravity="center"/>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@color/secondaryBackgroundColor"
+        android:padding="5dp"
+        android:layout_marginBottom="5dp">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/username_entry"
@@ -42,7 +48,9 @@
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/secondaryBackgroundColor"
+        android:padding="5dp">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/password_entry"
@@ -57,11 +65,17 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/login_button"
-        android:onClick="sendLoginMessage"/>
+        android:onClick="sendLoginMessage"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/white"
+        android:background="@drawable/round_button"/>
 
     <Button
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/register_button"
-        android:onClick="sendRegisterMessage"/>
+        android:onClick="sendRegisterMessage"
+        android:textColor="@color/white"
+        android:background="@drawable/round_button"/>
 </LinearLayout>

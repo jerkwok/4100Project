@@ -9,6 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:background="@color/backgroundColor"
     tools:context="project.csci.geocaching.MainActivity">
 
     <TextView
@@ -48,7 +49,11 @@
             android:drawableLeft="@android:drawable/ic_dialog_map"
             android:onClick="showMap"
             android:text="@string/show_map"
-            android:layout_above="@+id/showCacheButton"/>
+            android:layout_above="@+id/showCacheButton"
+            android:layout_marginBottom="5dp"
+            android:paddingLeft="20dp"
+            android:textColor="@color/white"
+            android:background="@drawable/round_button"/>
 
         <Button
             android:layout_width="match_parent"
@@ -57,7 +62,11 @@
             android:drawableLeft="@android:drawable/ic_menu_agenda"
             android:onClick="showCacheList"
             android:text="@string/show_cache_list"
-            android:layout_above="@+id/trackingButton"/>
+            android:layout_above="@+id/trackingButton"
+            android:layout_marginBottom="5dp"
+            android:paddingLeft="20dp"
+            android:textColor="@color/white"
+            android:background="@drawable/round_button"/>
 
         <Button
             android:layout_width="match_parent"
@@ -66,7 +75,10 @@
             android:drawableLeft="@android:drawable/ic_menu_search"
             android:onClick="showTracking"
             android:text="@string/show_tracking"
-            android:layout_above="@+id/logoutButton"/>
+            android:paddingLeft="20dp"
+            android:layout_above="@+id/logoutButton"
+            android:textColor="@color/white"
+            android:background="@drawable/round_button"/>
 
         <Button
             android:layout_width="match_parent"
@@ -75,6 +87,8 @@
             android:text="@string/logout"
             android:onClick="sendLogoutMessage"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="40dp"/>
+            android:layout_marginTop="40dp"
+            android:textColor="@color/white"
+            android:background="@drawable/round_button"/>
     </RelativeLayout>
 </LinearLayout>

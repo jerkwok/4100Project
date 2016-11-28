@@ -9,6 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:background="@color/backgroundColor"
     tools:context="project.csci.geocaching.RegisterActivity">
 
     <android.support.design.widget.TextInputLayout
@@ -51,11 +52,16 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/register_button"
-        android:onClick="sendRegisterMessage"/>
+        android:onClick="sendRegisterMessage"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/white"
+        android:background="@drawable/round_button"/>
 
     <Button
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/cancel_button"
-        android:onClick="sendCancelMessage"/>
+        android:onClick="sendCancelMessage"
+        android:textColor="@color/white"
+        android:background="@drawable/round_button"/>
 </LinearLayout>

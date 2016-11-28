@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/backgroundColor"
     tools:context="project.csci.geocaching.TrackingActivity">
 
     <TextView
@@ -72,7 +73,9 @@
                 android:onClick="claimClicked"
                 android:textAlignment="gravity"
                 android:gravity="center"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:background="@drawable/round_button"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -82,7 +85,10 @@
                 android:onClick="backClicked"
                 android:textAlignment="gravity"
                 android:gravity="center"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_marginLeft="3dp"
+                android:textColor="@color/white"
+                android:background="@drawable/round_button"/>
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>
