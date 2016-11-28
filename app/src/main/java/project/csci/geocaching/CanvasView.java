@@ -12,13 +12,13 @@ import android.view.View;
 
 public class CanvasView extends View {
 
-    public static final int SPRITE_WIDTH = 80;
-    public static final int SPRITE_HEIGHT = 80;
+    public static final int SPRITE_WIDTH = 160;
+    public static final int SPRITE_HEIGHT = 160;
 
-    public static final int TOTAL_WIDTH = 640;
-    public static final int TOTAL_HEIGHT = 160;
+    public static final int TOTAL_WIDTH = 1280;
+    public static final int TOTAL_HEIGHT = 320;
 
-    public static final int SPEED = 100;
+    public static final int SPEED = 80;
 
     private Bitmap spriteSheetBitmap;
 
@@ -45,7 +45,7 @@ public class CanvasView extends View {
     }
 
     private void prepareAnimation() {
-        spriteSheetBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.globe);
+        spriteSheetBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.globetwo);
 
         // un-scale the bitmap (compensate for density scaling)
         spriteSheetBitmap = Bitmap.createScaledBitmap(spriteSheetBitmap, TOTAL_WIDTH, TOTAL_HEIGHT, false);

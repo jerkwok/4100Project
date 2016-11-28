@@ -13,12 +13,15 @@
     tools:context="project.csci.geocaching.TrackingActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tracking_textview"
         android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"
-        android:textSize="17dp"/>
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textAlignment="center"
+        android:textSize="17dp"
+        android:background="@drawable/tracking_border"/>
 
     <TextView
         android:layout_width="wrap_content"
