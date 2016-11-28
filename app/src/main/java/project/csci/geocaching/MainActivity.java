@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         usernameText.setText(getString(R.string.welcome_message1,username));
         TextView welcomeText = (TextView) findViewById(R.id.welcome_textview);
         welcomeText.setText(getString(R.string.welcome_message2));
+        TextView trackingText = (TextView) findViewById(R.id.tracking_textview);
+        trackingText.setText(getString(R.string.no_active_cache));
     }
 
     public void showCacheList(View view){
