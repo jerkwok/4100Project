@@ -4,11 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<TableRow-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:id="@+id/cache_row_1"-->
-        <!--android:layout_height="wrap_content">-->
-
         <RelativeLayout
             android:layout_width="match_parent">
             <ImageView
@@ -38,8 +33,5 @@
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:layout_alignParentRight="true"/>
-                <!--android:layout_alignEnd="@id/row_cache_desc"-->
-                />
         </RelativeLayout>
-    <!--</TableRow>-->
 </TableLayout>
