@@ -227,7 +227,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         }
 
         // Disable or enable claiming the cache based on distance from cache.
-        if (distance <= 0.5) {
+        if (distance <= 0.01) {
             ButtonHelper buttonHelper = new ButtonHelper();
             buttonHelper.buttonClickSetter(this, findViewById(R.id.claim_button));
             claimButton.setBackground(getResources().getDrawable(R.drawable.round_button_up,null));
