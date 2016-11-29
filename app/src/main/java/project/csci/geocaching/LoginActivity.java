@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordText = (EditText) findViewById(R.id.password_entry);
         passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
+        // Set button click highlights.
         ButtonHelper buttonHelper = new ButtonHelper();
         buttonHelper.buttonClickSetter(this, findViewById(R.id.loginButton));
         buttonHelper.buttonClickSetter(this, findViewById(R.id.registerButton));
@@ -34,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
         int denser = (int)(160 / getResources().getDisplayMetrics().density);
         Log.d("DPI", Integer.toString(densityDpi));
         Log.d("Calc Size", Integer.toString(denser));
-
     }
 
     @Override
@@ -50,14 +50,15 @@ public class LoginActivity extends AppCompatActivity {
 
         if(database.validatePass(usernameEditText.getText().toString(), passwordEditText.getText().toString()) &&
                 usernameEditText.getText().toString().compareTo("") != 0 &&
-                passwordEditText.getText().toString().compareTo("") != 0){
+                passwordEditText.getText().toString().compareTo("") != 0) {
+
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("username", usernameEditText.getText().toString());
             intent.putExtra("userCaches", database.getUserCaches(usernameEditText.getText().toString()));
             Log.d("CACHES", Integer.toString(database.getUserCaches(usernameEditText.getText().toString())) );
             startActivity(intent);
         }else{
-            //display toast
+            // Display toast.
             Toast.makeText(this, getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
         }
     }
@@ -73,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         
         if(requestCode == REGISTER_CODE){
             if(resultCode == RESULT_OK){
-                //login
+                // Login.
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("username", data.getStringExtra("username"));
                 intent.putExtra("userCaches", data.getIntExtra("userCaches",0));

@@ -39,6 +39,7 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         userCachesBits = Integer.toBinaryString(getIntent().getIntExtra("userCaches", 0));
         Log.d("BITS", userCachesBits);
 
+        // Set button click highlights.
         ButtonHelper buttonHelper = new ButtonHelper();
         buttonHelper.buttonClickSetter(this, findViewById(R.id.track_cache_button));
         buttonHelper.buttonClickSetter(this, findViewById(R.id.cache_list_back_button));
@@ -66,20 +67,6 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
             }
             refreshDisplay();
         }
-    }
-
-    public void backButtonClicked(View view) { finish(); }
-
-    private List<String> loadCSVLines(InputStream inStream) throws IOException {
-        ArrayList<String> lines = new ArrayList<>();
-        BufferedReader in = new BufferedReader(new InputStreamReader(inStream));
-
-        String line;
-        while ((line = in.readLine()) != null) {
-            lines.add(line);
-        }
-
-        return lines;
     }
 
     private InputStream OpenHttpConnection(String s) throws IOException {
@@ -155,5 +142,19 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
             setResult(RESULT_CANCELED, output);
         }
         finish();
+    }
+
+    public void backButtonClicked(View view) { finish(); }
+
+    private List<String> loadCSVLines(InputStream inStream) throws IOException {
+        ArrayList<String> lines = new ArrayList<>();
+        BufferedReader in = new BufferedReader(new InputStreamReader(inStream));
+
+        String line;
+        while ((line = in.readLine()) != null) {
+            lines.add(line);
+        }
+
+        return lines;
     }
 }

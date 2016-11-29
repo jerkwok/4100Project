@@ -28,14 +28,20 @@ public class RegisterActivity extends AppCompatActivity {
         passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         passwordConfirmText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
+        // Set button click highlights.
         ButtonHelper buttonHelper = new ButtonHelper();
         buttonHelper.buttonClickSetter(this, findViewById(R.id.reg_registerButton));
         buttonHelper.buttonClickSetter(this, findViewById(R.id.reg_cancelButton));
     }
 
-    public void sendCancelMessage(View view) {
-        setResult(RESULT_CANCELED);
-        finish();
+    private boolean validatePasswords() {
+        Log.d("password", passwordText.getText().toString());
+        Log.d("password2", passwordConfirmText.getText().toString());
+
+        if (passwordText.getText().toString().equals(passwordConfirmText.getText().toString())){
+            return true;
+        }
+        return false;
     }
 
     public void sendRegisterMessage(View view) {
@@ -68,13 +74,8 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validatePasswords() {
-        Log.d("password", passwordText.getText().toString());
-        Log.d("password2", passwordConfirmText.getText().toString());
-
-        if (passwordText.getText().toString().equals(passwordConfirmText.getText().toString())){
-            return true;
-        }
-        return false;
+    public void sendCancelMessage(View view) {
+        setResult(RESULT_CANCELED);
+        finish();
     }
 }

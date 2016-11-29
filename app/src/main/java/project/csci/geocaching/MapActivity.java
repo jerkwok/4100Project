@@ -51,6 +51,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Menu inflater for map close button.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.map_menu, menu);
         return true;
@@ -60,6 +61,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.map:
+                // Close map when menu button is clicked.
                 this.finish();
                 return true;
             default:
@@ -85,12 +87,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            // request that the user install the GPS provider
+            // Request that the user install the GPS provider.
             String locationConfig = Settings.ACTION_LOCATION_SOURCE_SETTINGS;
             Intent enableGPS = new Intent(locationConfig);
             startActivity(enableGPS);
         } else {
-            // determine the location
+            // Determine the location.
             updateLocation();
         }
     }
@@ -100,7 +102,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-            // request an fine location provider
+            // Request an fine location provider.
             Criteria criteria = new Criteria();
             criteria.setAccuracy(Criteria.ACCURACY_FINE);
             criteria.setPowerRequirement(Criteria.POWER_MEDIUM);
@@ -110,6 +112,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             criteria.setCostAllowed(false);
             String recommended = locationManager.getBestProvider(criteria, true);
 
+            // Get current location.
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, this);
 
             Location location = locationManager.getLastKnownLocation(recommended);
@@ -171,12 +174,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void showLocationName(Location location) {
         Log.d("LocationSample", "showLocationName(" + location + ")");
-        // perform a reverse geocode to get the address
+        // Perform a reverse geocode to get the address.
         if (Geocoder.isPresent()) {
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
             try {
-                // reverse geocode from current GPS position
+                // Reverse geocode from current GPS position.
                 List<Address> results = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
                 if (results.size() > 0) {
@@ -195,9 +198,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void setLocation(Location location, Address address) {
 
+        // Checks if map is initiated.
         if (mMap != null) {
             LatLng currLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
+            // Refresh map.
             mMap.clear();
             mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
@@ -231,6 +236,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
             });
 
+            // Marker for the current device location.
             mMap.addMarker(new MarkerOptions().position(currLocation)
                     .title("Current Location")
                     .snippet("Latitude: " + address.getLatitude() + "\n" +
@@ -239,6 +245,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             Intent i = getIntent();
             boolean selected = i.getBooleanExtra("cacheSelected",false);
 
+            // Only if there is a cache selected.
             if (selected) {
                 String cacheTitle = i.getStringExtra("cacheName");
                 double cacheLat = i.getDoubleExtra("cacheLat", 0);
@@ -246,12 +253,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 LatLng geocacheLocation = new LatLng(cacheLat, cacheLong);
 
+                // Marker for selected cache.
                 mMap.addMarker(new MarkerOptions().position(geocacheLocation)
                         .title(cacheTitle)
                         .snippet("Latitude: " + cacheLat + "\n" +
                                 "Longitude: " + cacheLong)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             }
+
+            // Settings for the map. (Starting camera, zoom controls, compass, and map type)
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currLocation,19.0f));
             mMap.getUiSettings().setZoomControlsEnabled(true);
             mMap.getUiSettings().setCompassEnabled(true);
@@ -261,8 +271,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        // Initiate and update map.
         mMap = googleMap;
-
         updateLocation();
     }
 

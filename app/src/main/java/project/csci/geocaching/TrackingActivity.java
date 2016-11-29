@@ -36,6 +36,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
     private SensorManager mSensorManager;
     Sensor accelerometer;
     Sensor magnetometer;
+    TextView bearingTitle;
     TextView bearingText;
     ImageView arrowView;
     double bearing;
@@ -45,12 +46,14 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking);
 
+        // Initiate tracking cache to empty.
         trackingCache.setCacheID(getIntent().getIntExtra("cacheID", 0));
         trackingCache.setName(getIntent().getStringExtra("cacheName"));
         trackingCache.setLat(getIntent().getDoubleExtra("cacheLat", 0));
         trackingCache.setLong(getIntent().getDoubleExtra("cacheLong", 0));
         trackingCache.setDescription(getIntent().getStringExtra("cacheDesc"));
 
+        // If there is a cache selected, display selected cache.
         if (getIntent().getBooleanExtra("cacheSelected", false)){
             TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
             trackingInfo.setText(getString(R.string.tracking_information,
@@ -59,13 +62,16 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
                     trackingCache.getLong()));
         }
 
-        arrowView = (ImageView) findViewById(R.id.arrow);
+        bearingTitle = (TextView) findViewById(R.id.bearing_title);
         bearingText = (TextView) findViewById(R.id.bearing_title);
+        arrowView = (ImageView) findViewById(R.id.arrow);
+
         setupLocationServices();
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
+        // Set button click highlights.
         ButtonHelper buttonHelper = new ButtonHelper();
         buttonHelper.buttonClickSetter(this, findViewById(R.id.claim_button));
         buttonHelper.buttonClickSetter(this, findViewById(R.id.back_button));
@@ -75,12 +81,12 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
 
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            // request that the user install the GPS provider
+            // Request that the user install the GPS provider.
             String locationConfig = Settings.ACTION_LOCATION_SOURCE_SETTINGS;
             Intent enableGPS = new Intent(locationConfig);
             startActivity(enableGPS);
         } else {
-            // determine the location
+            // Determine the location.
             updateLocation();
         }
     }
@@ -96,7 +102,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             LocationManager locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
 
-            // request an fine location provider
+            // Request an fine location provider.
             Criteria criteria = new Criteria();
             criteria.setAccuracy(Criteria.ACCURACY_FINE);
             criteria.setPowerRequirement(Criteria.POWER_MEDIUM);
@@ -106,6 +112,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
             criteria.setCostAllowed(false);
             String recommended = locationManager.getBestProvider(criteria, true);
 
+            // Get current device location.
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, this);
 
             Location location = locationManager.getLastKnownLocation(recommended);
@@ -174,11 +181,13 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
 
     private void setLocation(double currLat, double currLong) {
 
+        // Calculate latitude and longitude in radians for current and target locations.
         double currRadLat = Math.toRadians(currLat);
         double currRadLong = Math.toRadians(currLong);
         double targetRadLat = Math.toRadians(trackingCache.getLat());
         double targetRadLong = Math.toRadians(trackingCache.getLong());
 
+        // Calculations for distance to target location from current location.
         double dlat = targetRadLat - currRadLat;
         double dlong = targetRadLong - currRadLong;
 
@@ -194,17 +203,17 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
         TextView distanceText = (TextView) findViewById(R.id.distance_text);
 
         if (getIntent().getBooleanExtra("cacheSelected", false)) {
+            // Display distance if a cache is being tracked.
             distanceText.setText(getString(R.string.distance_information,distance));
-        }else{
-            trackingText.setText(getString(R.string.no_active_cache));
-            distanceText.setText(R.string.no_distance);
-        }
-
-        if (getIntent().getBooleanExtra("cacheSelected", false)){
+            // Display selected cache.
             trackingText.setText(getString(R.string.tracking_information,
                     trackingCache.getName(),
                     trackingCache.getLat(),
                     trackingCache.getLong()));
+        } else {
+            // Display a message for no cache being tracked.
+            trackingText.setText(getString(R.string.no_active_cache));
+            distanceText.setText(R.string.no_distance);
         }
 
         bearing = getBearing(currLong, currLat,trackingCache.getLong(),trackingCache.getLat() );
@@ -212,12 +221,14 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
 
         Button claimButton = (Button)findViewById(R.id.claim_button);
 
-        if (distance <= GRADIENT_START_DISTANCE) {
+        // Distance text colour changing based on device distance from cache.
+       if (distance <= GRADIENT_START_DISTANCE) {
             distanceText.setTextColor(Color.rgb(0,(int) (((GRADIENT_START_DISTANCE - distance) / GRADIENT_START_DISTANCE) * 255),0));
         } else {
             distanceText.setTextColor(Color.GRAY);
         }
 
+        // Disable or enable claiming the cache based on distance from cache.
         if (distance <= CLAIM_DISTANCE) {
             ButtonHelper buttonHelper = new ButtonHelper();
             buttonHelper.buttonClickSetter(this, findViewById(R.id.claim_button));
@@ -230,6 +241,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
     }
 
     public void claimClicked(View view) {
+        // Claim cache and exit tracking activity.
         Intent output = new Intent();
         output.putExtra("claimed", true);
         setResult(RESULT_OK,output);
@@ -237,6 +249,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
     }
 
     public void backClicked(View view) {
+        // Exit tracking activity.
         Intent output = new Intent();
         output.putExtra("claimed", false);
         setResult(RESULT_CANCELED,output);
@@ -245,6 +258,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
 
     public double getBearing(double currLong, double currLat, double endLong, double endLat) {
 
+        // Calculate bearing.
         double y = Math.abs(currLong - endLong);
         double x =Math.log( Math.tan(endLat/2.0 + Math.PI/4.0) /
                 Math.tan(currLat/2.0 + Math.PI/4.0));
@@ -253,24 +267,33 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
             mGravity = event.values;
         if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
             mGeomagnetic = event.values;
+
         if (mGravity != null && mGeomagnetic != null) {
             float R[] = new float[9];
             float I[] = new float[9];
             boolean success = SensorManager.getRotationMatrix(R, I, mGravity, mGeomagnetic);
+
             if (success) {
                 float orientation[] = new float[3];
                 SensorManager.getOrientation(R, orientation);
                 azimut = ((float)Math.toDegrees(orientation[0])+360)%360;
 
-                if (bearing < azimut){
-                    arrowView.setRotation(Float.valueOf(String.valueOf(360 - (azimut - bearing))));
-                }else{
-
-                    arrowView.setRotation(Float.valueOf(String.valueOf(bearing-azimut)));
+                if (getIntent().getBooleanExtra("cacheSelected", false)) {
+                    // Change arrow direction based on azimut and bearing.
+                    if (bearing < azimut) {
+                        arrowView.setRotation(Float.valueOf(String.valueOf(360 - (azimut - bearing))));
+                    } else {
+                        arrowView.setRotation(Float.valueOf(String.valueOf(bearing - azimut)));
+                    }
+                } else {
+                    // Hide bearing title and arrow if no selected cache.
+                    bearingTitle.setText("");
+                    arrowView.setVisibility(View.GONE);
                 }
             }
         }

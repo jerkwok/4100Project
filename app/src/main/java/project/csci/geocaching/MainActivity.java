@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Menu inflater for main menu. Has logout button.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return true;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.main:
+                // Logout menu button.
                 finish();
                 return true;
             default:
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         username = getIntent().getStringExtra("username");
         userCaches = getIntent().getIntExtra("userCaches", 0);
 
+        // Set welcome message and no selected cache message.
         TextView usernameText = (TextView) findViewById(R.id.username_textview);
         usernameText.setText(getString(R.string.welcome_message1,username));
         TextView welcomeText = (TextView) findViewById(R.id.welcome_textview);
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         TextView trackingText = (TextView) findViewById(R.id.tracking_textview);
         trackingText.setText(getString(R.string.no_active_cache));
 
+        // Set button click highlights.
         ButtonHelper buttonHelper = new ButtonHelper();
         buttonHelper.buttonClickSetter(this, findViewById(R.id.showMapButton));
         buttonHelper.buttonClickSetter(this, findViewById(R.id.showCacheButton));
@@ -61,17 +65,12 @@ public class MainActivity extends AppCompatActivity {
         buttonHelper.buttonClickSetter(this, findViewById(R.id.logoutButton));
     }
 
-    public void showCacheList(View view){
-        Intent intent = new Intent(this, CacheListActivity.class);
-        intent.putExtra("userCaches", userCaches);
-        intent.putExtra("username", getIntent().getStringExtra("username"));
-        this.startActivityForResult(intent, CACHE_LIST_CODE);
-    }
-
     public void showMap(View view){
+        // Start map activity.
         Intent i = new Intent(this, MapActivity.class);
 
         if (trackingCache.getCacheID() != -1){
+            // Give selected cache information.
             i.putExtra("cacheSelected", true);
             i.putExtra("cacheID", trackingCache.getCacheID());
             i.putExtra("cacheName", trackingCache.getName());
@@ -81,9 +80,38 @@ public class MainActivity extends AppCompatActivity {
             i.putExtra("cacheSelected", false);
         }
 
+        // Give user database and current user.
         i.putExtra("userCaches", userCaches);
         i.putExtra("username", getIntent().getStringExtra("username"));
         this.startActivity(i);
+    }
+
+    public void showCacheList(View view) {
+        // Start cache list activity.
+        Intent intent = new Intent(this, CacheListActivity.class);
+        intent.putExtra("userCaches", userCaches);
+        intent.putExtra("username", getIntent().getStringExtra("username"));
+        this.startActivityForResult(intent, CACHE_LIST_CODE);
+    }
+
+    public void showTracking(View view) {
+        Intent i = new Intent(this, TrackingActivity.class);
+
+        if (trackingCache.getCacheID() != -1){
+            // Give selected cache information.
+            i.putExtra("cacheSelected", true);
+            i.putExtra("cacheID", trackingCache.getCacheID());
+            i.putExtra("cacheName", trackingCache.getName());
+            i.putExtra("cacheLat", trackingCache.getLat());
+            i.putExtra("cacheLong", trackingCache.getLong());
+        } else {
+            i.putExtra("cacheSelected", false);
+        }
+
+        // Give user database and current user.
+        i.putExtra("userCaches", userCaches);
+        i.putExtra("username", getIntent().getStringExtra("username"));
+        this.startActivityForResult(i, TRACKING_CODE);
     }
 
     public void sendLogoutMessage(View view) {
@@ -95,13 +123,14 @@ public class MainActivity extends AppCompatActivity {
         Log.d("USERNAME", username);
 
         if ((requestCode == CACHE_LIST_CODE) && (resultCode == RESULT_OK)) {
-            //save the tracked cache to a file
+            // Save the tracked cache to a file.
             trackingCache.setCacheID(data.getIntExtra("cacheID", 0));
             trackingCache.setName(data.getStringExtra("cacheName"));
             trackingCache.setLat(data.getDoubleExtra("cacheLat", 0));
             trackingCache.setLong(data.getDoubleExtra("cacheLong", 0));
             trackingCache.setDescription(data.getStringExtra("cacheDesc"));
 
+            // Display selected cache.
             TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
             trackingInfo.setText(getString(R.string.tracking_information,
                     trackingCache.getName(),
@@ -109,8 +138,7 @@ public class MainActivity extends AppCompatActivity {
                     trackingCache.getLong()));
 
         } else if ((requestCode == TRACKING_CODE) && (resultCode == RESULT_OK)) {
-            //cache successfully claimed
-            //set new cache value for user
+            // Cache successfully claimed. Set new cache value for user.
             int newCacheValue = 0;
             String oldCaches = Integer.toBinaryString(database.getUserCaches(getIntent().getStringExtra("username")));
             Log.d("OLD CACHES", oldCaches);
@@ -128,36 +156,19 @@ public class MainActivity extends AppCompatActivity {
                 userCaches = newCacheValue;
             }
             Log.d("NEW CACHE VALUE", Integer.toString(newCacheValue));
-            //write to database
 
             if (data.getBooleanExtra("claimed",false)) {
+                // Display that cache was successfully claimed.
                 TextView trackingInfo = (TextView) findViewById(R.id.tracking_textview);
                 trackingInfo.setText(R.string.claimed_cache);
             }
 
+            // Set selected cache to none.
             trackingCache.setCacheID(data.getIntExtra("cacheID", -1));
             trackingCache.setName(data.getStringExtra("cacheName"));
             trackingCache.setLat(data.getDoubleExtra("cacheLat", 0));
             trackingCache.setLong(data.getDoubleExtra("cacheLong", 0));
             trackingCache.setDescription(data.getStringExtra("cacheDesc"));
         }
-    }
-
-    public void showTracking(View view) {
-        Intent i = new Intent(this, TrackingActivity.class);
-
-        if (trackingCache.getCacheID() != -1){
-            i.putExtra("cacheSelected", true);
-            i.putExtra("cacheID", trackingCache.getCacheID());
-            i.putExtra("cacheName", trackingCache.getName());
-            i.putExtra("cacheLat", trackingCache.getLat());
-            i.putExtra("cacheLong", trackingCache.getLong());
-        } else {
-            i.putExtra("cacheSelected", false);
-        }
-        
-        i.putExtra("userCaches", userCaches);
-        i.putExtra("username", getIntent().getStringExtra("username"));
-        this.startActivityForResult(i, TRACKING_CODE);
     }
 }
