@@ -12,16 +12,18 @@ import android.widget.TextView;
 
 import java.util.List;
 
+
+//This is the custom adapter for the cache list view.
+
 public class CacheListAdapter extends ArrayAdapter<Cache> {
 
     private Context context;
-    private String caches;
-    private List<Cache> cachesList;
+    private String caches; //Binary string where each character represents a single cache, 1 = claimed, 0 = unclaimed
+    private List<Cache> cachesList; //Contains the metadata about the caches.
     private int selected;
 
     public void setSelected(int selected) {
         this.selected = selected;
-        Log.d("Selected Changed", Integer.toString(this.selected));
     }
 
     public CacheListAdapter(Context context, int resource, List<Cache> objects, String caches, int selected) {
@@ -46,23 +48,21 @@ public class CacheListAdapter extends ArrayAdapter<Cache> {
         TextView cacheDesc = (TextView) convertView.findViewById(R.id.row_cache_desc);
         ImageView statusImage = (ImageView) convertView.findViewById(R.id.status_image);
 
+        //Setting the text values of each of the elements in the row's view
         cacheText.setText(cachesList.get(position).getName());
         cacheLoc.setText(cachesList.get(position).getLoc());
         cacheDesc.setText(cachesList.get(position).getDescription());
 
-//        Log.d("ADAPTER CACHES", caches);
-        Log.d("Child", Integer.toString(position));
-        Log.d("Caches", caches);
-        Log.d("Selected", Integer.toString(selected));
-
+        //Set the star image if the cache is claimed already
         if ((position < caches.length()) &&
                 (caches.substring(caches.length() - position - 1).charAt(0) == '1')
                 ) {
-            Log.d("Substring", Character.toString(caches.substring(caches.length() - position - 1).charAt(0)));
             statusImage.setImageResource(R.drawable.star);
         }else if(position == selected){
+            //Set the image to have the magnifying glass if the view is the currently tracked one.
             statusImage.setImageResource(R.drawable.magnifying);
         }else{
+            //Otherwise set no image
             statusImage.setImageResource(0);
         }
         return convertView;

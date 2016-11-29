@@ -25,6 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
         passwordText = (EditText) findViewById(R.id.password_entry);
         passwordConfirmText = (EditText) findViewById(R.id.password_confirm);
 
+        //Sets the soft keyboard to have a OK key instead of a newline key.
         passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         passwordConfirmText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
@@ -35,9 +36,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean validatePasswords() {
-        Log.d("password", passwordText.getText().toString());
-        Log.d("password2", passwordConfirmText.getText().toString());
-
         if (passwordText.getText().toString().equals(passwordConfirmText.getText().toString())){
             return true;
         }
@@ -45,22 +43,13 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void sendRegisterMessage(View view) {
-        if (validatePasswords()) {
-            Log.d("Password:", "TRUE");
-        } else {
-            Log.d("Password:", "FALSE");
-        }
-
-        if (!(database.checkUserDupes(usernameText.getText().toString()))) {
-            Log.d("Dupe:", "TRUE");
-        } else {
-            Log.d("Dupe:", "FALSE");
-        }
 
         if(usernameText.getText().toString().compareTo("") == 0 || passwordText.getText().toString().compareTo("") == 0 ||
                 passwordConfirmText.getText().toString().compareTo("") == 0){
+            //empty fields, try again
             Toast.makeText(this, getString(R.string.no_empty_text), Toast.LENGTH_SHORT).show();
         }else if (validatePasswords() && !(database.checkUserDupes(usernameText.getText().toString())) ) {
+            //Valid register action
             database.addEntry(usernameText.getText().toString(), passwordText.getText().toString());
             Intent output = new Intent();
             output.putExtra("username",usernameText.getText().toString() );

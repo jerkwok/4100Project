@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final int MAIN_CODE = 1;
     private static final int CACHE_LIST_CODE = 2;
     private static final int TRACKING_CODE = 3;
 
@@ -89,8 +87,10 @@ public class MainActivity extends AppCompatActivity {
     public void showCacheList(View view) {
         // Start cache list activity.
         Intent intent = new Intent(this, CacheListActivity.class);
+        //pass data the activity
         intent.putExtra("userCaches", userCaches);
         intent.putExtra("username", getIntent().getStringExtra("username"));
+        //If we're tracking a cache, also pass along which one we're passing
         if (trackingCache.getCacheID() != -1){
             intent.putExtra("cacheSelected", true);
             intent.putExtra("cacheID", trackingCache.getCacheID());
@@ -124,8 +124,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("USERNAME", username);
-
         if ((requestCode == CACHE_LIST_CODE) && (resultCode == RESULT_OK)) {
             // Save the tracked cache to a file.
             trackingCache.setCacheID(data.getIntExtra("cacheID", 0));
@@ -145,21 +143,24 @@ public class MainActivity extends AppCompatActivity {
             // Cache successfully claimed. Set new cache value for user.
             int newCacheValue = 0;
             String oldCaches = Integer.toBinaryString(database.getUserCaches(getIntent().getStringExtra("username")));
-            Log.d("OLD CACHES", oldCaches);
-            Log.d("CACHE ID", Integer.toString(trackingCache.getCacheID()));
 
+            //only update if the cache value is 0, that is the cache is unclaimed.
             if ((trackingCache.getCacheID() >= oldCaches.length()) ||
                     (oldCaches.substring(oldCaches.length() - trackingCache.getCacheID() - 1).charAt(0) == '0')
                     ){
+
                         double power = Math.pow(2, trackingCache.getCacheID());
                         int intPower = (int) power;
+
+                //flip the bit value of the cache id
                     newCacheValue = database.getUserCaches(getIntent().getStringExtra("username"))
                         +  intPower;
 
+                //update in the database
                 database.updateUserCache(getIntent().getStringExtra("username"),newCacheValue );
+                //update the local variable
                 userCaches = newCacheValue;
             }
-            Log.d("NEW CACHE VALUE", Integer.toString(newCacheValue));
 
             if (data.getBooleanExtra("claimed",false)) {
                 // Display that cache was successfully claimed.

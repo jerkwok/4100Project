@@ -7,6 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+//This contains the functions for interacting with the users Database.
+//passwords are encrypted using a free library found online with the BCrypt algorithm.
+
+
 public class UserDBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Users.db";
@@ -17,10 +21,10 @@ public class UserDBHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    //Create the table
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(userId INTEGER PRIMARY KEY,name TEXT, password TEXT, caches INTEGER)");
-
     }
 
     @Override
@@ -83,11 +87,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
             }
         }
 
-        Log.d("CACHES", Integer.toString(caches));
         cursor.close();
         return caches;
     }
 
+    //Update the DB when a user claims a cache
     public void updateUserCache(String username, int caches){
         SQLiteDatabase db = this.getWritableDatabase();
 

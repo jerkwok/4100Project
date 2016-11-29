@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         passwordText = (EditText) findViewById(R.id.password_entry);
+        //Sets the soft keyboard to have a OK key instead of a newline key.
         passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         // Set button click highlights.
@@ -30,17 +29,13 @@ public class LoginActivity extends AppCompatActivity {
         buttonHelper.buttonClickSetter(this, findViewById(R.id.loginButton));
         buttonHelper.buttonClickSetter(this, findViewById(R.id.registerButton));
 
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        int densityDpi = (int)(metrics.density * 160f);
-        int denser = (int)(160 / getResources().getDisplayMetrics().density);
-        Log.d("DPI", Integer.toString(densityDpi));
-        Log.d("Calc Size", Integer.toString(denser));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         passwordText = (EditText) findViewById(R.id.password_entry);
+        //clear the fields on resume.
         passwordText.setText("");
     }
 
@@ -48,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText usernameEditText = (EditText) findViewById(R.id.username_entry);
         EditText passwordEditText = (EditText) findViewById(R.id.password_entry);
 
+        //validate login with database.
         if(database.validatePass(usernameEditText.getText().toString(), passwordEditText.getText().toString()) &&
                 usernameEditText.getText().toString().compareTo("") != 0 &&
                 passwordEditText.getText().toString().compareTo("") != 0) {
@@ -55,7 +51,6 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("username", usernameEditText.getText().toString());
             intent.putExtra("userCaches", database.getUserCaches(usernameEditText.getText().toString()));
-            Log.d("CACHES", Integer.toString(database.getUserCaches(usernameEditText.getText().toString())) );
             startActivity(intent);
         }else{
             // Display toast.

@@ -24,8 +24,8 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
 
     ArrayList<Cache> cacheList = new ArrayList<>();
     Cache selected = null;
-    String url = "http://pastebin.com/raw/5jCpxuyN";
-    String userCachesBits;
+    String url = "http://pastebin.com/raw/5jCpxuyN"; //the url where the Cache data lives.
+    String userCachesBits; //Binary string where each character represents a single cache, 1 = claimed, 0 = unclaimed
     CacheListAdapter cacheAdapter;
 
     @Override
@@ -37,7 +37,6 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         StrictMode.setThreadPolicy(policy);
 
         userCachesBits = Integer.toBinaryString(getIntent().getIntExtra("userCaches", 0));
-        Log.d("BITS", userCachesBits);
 
         // Set button click highlights.
         ButtonHelper buttonHelper = new ButtonHelper();
@@ -62,9 +61,6 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         }
 
         if (cacheList.size()> 0){
-            for( Cache cache : cacheList){
-                Log.d("Cache", cache.toString());
-            }
             refreshDisplay();
         }
     }
@@ -99,33 +95,34 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("CLICKED", cacheList.get(position).toString());
-        Log.d("USER CACHES", userCachesBits);
-        Log.d("POSITION", Integer.toString(position));
-        Log.d("CHILDREN", Integer.toString(parent.getChildCount()));
-        Log.d("VISIBLE", Integer.toString(parent.getFirstVisiblePosition()));
 
         ImageView statusImage;
 
+        //Clear out all the visible images first.
         for(int a = 0; a < parent.getChildCount(); a++) {
             statusImage = (ImageView) parent.getChildAt(a).findViewById(R.id.status_image);
             statusImage.setImageResource(0);
         }
 
+        //Get the view of the clicked row. Have to be careful because getChildAt takes in 0 for the first visible row
         statusImage = (ImageView) parent.getChildAt(position - parent.getFirstVisiblePosition()).findViewById(R.id.status_image);
         statusImage.setImageResource(R.drawable.magnifying);
         selected = cacheList.get(position);
         cacheAdapter.setSelected(position);
 
+        //Fill stars
         for(int a = 0; a < parent.getChildCount(); a++)
         {
+
+            //If a claimed cache's row is visible
             if (((a + parent.getFirstVisiblePosition()) < userCachesBits.length()) &&
                     (userCachesBits.substring(userCachesBits.length() - (a + parent.getFirstVisiblePosition()) - 1).charAt(0) == '1')
                     ){
+                //If it's the row we clicked, then we don't have a selected cache.
+                //(can't select claimed rows)
                 if (a == position){
                     selected = null;
                 }
-                Log.d("a", Integer.toString(a));
                 statusImage = (ImageView) parent.getChildAt(a).findViewById(R.id.status_image);
                 statusImage.setImageResource(R.drawable.star);
             }

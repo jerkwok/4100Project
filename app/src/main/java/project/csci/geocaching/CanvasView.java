@@ -12,6 +12,7 @@ import android.view.View;
 
 public class CanvasView extends View {
 
+    //Animation constants
     public static final int SPRITE_WIDTH = 160;
     public static final int SPRITE_HEIGHT = 160;
 
