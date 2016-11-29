@@ -86,8 +86,12 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
 
     private void refreshDisplay() {
         ListView listview = (ListView) findViewById(R.id.cache_list);
+        int selectedID;
+
+        selectedID = getIntent().getIntExtra("cacheID",-1);
+
         cacheAdapter = new CacheListAdapter(this,android.R.layout.simple_list_item_1,
-                cacheList, userCachesBits, -1);
+                cacheList, userCachesBits, selectedID);
 
         listview.setAdapter(cacheAdapter);
         listview.setOnItemClickListener(CacheListActivity.this);

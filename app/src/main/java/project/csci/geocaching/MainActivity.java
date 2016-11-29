@@ -91,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CacheListActivity.class);
         intent.putExtra("userCaches", userCaches);
         intent.putExtra("username", getIntent().getStringExtra("username"));
+        if (trackingCache.getCacheID() != -1){
+            intent.putExtra("cacheSelected", true);
+            intent.putExtra("cacheID", trackingCache.getCacheID());
+        }
         this.startActivityForResult(intent, CACHE_LIST_CODE);
     }
 

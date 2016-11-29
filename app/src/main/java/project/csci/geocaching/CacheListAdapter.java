@@ -21,6 +21,7 @@ public class CacheListAdapter extends ArrayAdapter<Cache> {
 
     public void setSelected(int selected) {
         this.selected = selected;
+        Log.d("Selected Changed", Integer.toString(this.selected));
     }
 
     public CacheListAdapter(Context context, int resource, List<Cache> objects, String caches, int selected) {
@@ -52,6 +53,7 @@ public class CacheListAdapter extends ArrayAdapter<Cache> {
 //        Log.d("ADAPTER CACHES", caches);
         Log.d("Child", Integer.toString(position));
         Log.d("Caches", caches);
+        Log.d("Selected", Integer.toString(selected));
 
         if ((position < caches.length()) &&
                 (caches.substring(caches.length() - position - 1).charAt(0) == '1')
