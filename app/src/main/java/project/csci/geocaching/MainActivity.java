@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         TextView trackingText = (TextView) findViewById(R.id.tracking_textview);
         trackingText.setText(getString(R.string.no_active_cache));
 
+        // Set button click highlights.
         ButtonHelper buttonHelper = new ButtonHelper();
         buttonHelper.buttonClickSetter(this, findViewById(R.id.showMapButton));
         buttonHelper.buttonClickSetter(this, findViewById(R.id.showCacheButton));
