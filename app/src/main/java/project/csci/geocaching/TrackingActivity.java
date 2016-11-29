@@ -34,6 +34,7 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
     private SensorManager mSensorManager;
     Sensor accelerometer;
     Sensor magnetometer;
+    TextView bearingTitle;
     TextView bearingText;
     ImageView arrowView;
     double bearing;
@@ -59,8 +60,10 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
                     trackingCache.getLong()));
         }
 
-        arrowView = (ImageView) findViewById(R.id.arrow);
+        bearingTitle = (TextView) findViewById(R.id.bearing_title);
         bearingText = (TextView) findViewById(R.id.bearing_title);
+        arrowView = (ImageView) findViewById(R.id.arrow);
+
         setupLocationServices();
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -278,10 +281,17 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
                 SensorManager.getOrientation(R, orientation);
                 azimut = ((float)Math.toDegrees(orientation[0])+360)%360;
 
-                if (bearing < azimut){
-                    arrowView.setRotation(Float.valueOf(String.valueOf(360 - (azimut - bearing))));
-                }else{
-                    arrowView.setRotation(Float.valueOf(String.valueOf(bearing-azimut)));
+                if (getIntent().getBooleanExtra("cacheSelected", false)) {
+                    // Change arrow direction based on azimut and bearing.
+                    if (bearing < azimut) {
+                        arrowView.setRotation(Float.valueOf(String.valueOf(360 - (azimut - bearing))));
+                    } else {
+                        arrowView.setRotation(Float.valueOf(String.valueOf(bearing - azimut)));
+                    }
+                } else {
+                    // Hide bearing title and arrow if no selected cache.
+                    bearingTitle.setText("");
+                    arrowView.setVisibility(View.GONE);
                 }
             }
         }
