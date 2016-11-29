@@ -69,20 +69,6 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
         }
     }
 
-    public void backButtonClicked(View view) { finish(); }
-
-    private List<String> loadCSVLines(InputStream inStream) throws IOException {
-        ArrayList<String> lines = new ArrayList<>();
-        BufferedReader in = new BufferedReader(new InputStreamReader(inStream));
-
-        String line;
-        while ((line = in.readLine()) != null) {
-            lines.add(line);
-        }
-
-        return lines;
-    }
-
     private InputStream OpenHttpConnection(String s) throws IOException {
         URLConnection conn;
         InputStream inputStream = null;
@@ -156,5 +142,19 @@ public class CacheListActivity extends AppCompatActivity implements AdapterView.
             setResult(RESULT_CANCELED, output);
         }
         finish();
+    }
+
+    public void backButtonClicked(View view) { finish(); }
+
+    private List<String> loadCSVLines(InputStream inStream) throws IOException {
+        ArrayList<String> lines = new ArrayList<>();
+        BufferedReader in = new BufferedReader(new InputStreamReader(inStream));
+
+        String line;
+        while ((line = in.readLine()) != null) {
+            lines.add(line);
+        }
+
+        return lines;
     }
 }
