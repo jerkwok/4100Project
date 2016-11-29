@@ -26,6 +26,8 @@ import android.widget.TextView;
 public class TrackingActivity extends AppCompatActivity implements LocationListener, SensorEventListener {
 
     private static final int EARTH_RADIUS = 6373;
+    public static final int GRADIENT_START_DISTANCE = 100;
+    public static final double CLAIM_DISTANCE = 0.01;
 
     private Cache trackingCache = new Cache();
     float[] mGravity;
@@ -210,13 +212,13 @@ public class TrackingActivity extends AppCompatActivity implements LocationListe
 
         Button claimButton = (Button)findViewById(R.id.claim_button);
 
-        if (distance <= 100) {
-            distanceText.setTextColor(Color.rgb(0,(int) (((100 - distance) / 100) * 255),0));
+        if (distance <= GRADIENT_START_DISTANCE) {
+            distanceText.setTextColor(Color.rgb(0,(int) (((GRADIENT_START_DISTANCE - distance) / GRADIENT_START_DISTANCE) * 255),0));
         } else {
             distanceText.setTextColor(Color.GRAY);
         }
 
-        if (distance <= 0.5) {
+        if (distance <= CLAIM_DISTANCE) {
             ButtonHelper buttonHelper = new ButtonHelper();
             buttonHelper.buttonClickSetter(this, findViewById(R.id.claim_button));
             claimButton.setBackground(getResources().getDrawable(R.drawable.round_button_up,null));
