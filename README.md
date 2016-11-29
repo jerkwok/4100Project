@@ -4,7 +4,7 @@
 
 Jeremy Kwok - 100341977
 
-Truyen Truong - Some Number
+Truyen Truong - 100516976
 
 
 GeoCaching is an app that encourages exploration in the world. Usuing the app, users can track down real world locations.
