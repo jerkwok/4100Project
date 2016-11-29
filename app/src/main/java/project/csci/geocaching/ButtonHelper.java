@@ -11,8 +11,10 @@ public class ButtonHelper {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    // Sets a drawable for a rounded button when pushed down.
                     button.setBackground(activity.getResources().getDrawable(R.drawable.round_button_down,null));
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    // Sets a drawable for a rounded button when not pushed.
                     button.setBackground(activity.getResources().getDrawable(R.drawable.round_button_up,null));
                 }
                 return false;
