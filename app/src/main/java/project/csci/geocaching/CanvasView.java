@@ -58,7 +58,7 @@ public class CanvasView extends View {
     protected void onDraw(Canvas canvas) {
 
         // fill the background grey
-        canvas.drawRGB(200, 200, 200);
+        canvas.drawRGB(172, 172, 172);
 
         // draw the current frame
         drawFrame(canvas);

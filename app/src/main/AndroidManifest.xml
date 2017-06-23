@@ -43,6 +43,6 @@
 
         <activity android:name=".RegisterActivity" />
         <activity android:name=".CacheListActivity" />
-        <activity android:name=".TrackingActivity"></activity>
+        <activity android:name=".TrackingActivity" />
     </application>
 </manifest>
